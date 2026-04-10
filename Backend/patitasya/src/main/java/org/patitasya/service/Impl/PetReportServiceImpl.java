@@ -8,10 +8,16 @@ import org.patitasya.entity.PetReport;
 import org.patitasya.entity.Usuario;
 import org.patitasya.enums.PostStatus;
 import org.patitasya.enums.PostType;
+import org.patitasya.repository.PetPhotoRepository;
 import org.patitasya.repository.PetReportRepository;
 import org.patitasya.repository.UsuarioRepository;
+import org.patitasya.security.SecurityUtils;
+import org.patitasya.service.CloudinaryService;
 import org.patitasya.service.PetReportService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,11 +28,18 @@ public class PetReportServiceImpl implements PetReportService {
 
     private final PetReportRepository petReportRepository;
     private final UsuarioRepository usuarioRepository;
+    private final CloudinaryService cloudinaryService;
+    private final PetPhotoRepository petPhotoRepository;
 
     @Override
-    public PetReportResponseDTO createReport(PetReportRequestDTO dto, Long usuarioId) {
+    public PetReportResponseDTO createReport(PetReportRequestDTO dto) {
+        /*
         Usuario usuario = usuarioRepository.findById(usuarioId)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+         */
+
+        Usuario usuario = SecurityUtils.getCurrentUser();
 
         PetReport petReport = PetReport.builder()
                 .titulo(dto.getTitulo())
@@ -78,6 +91,18 @@ public class PetReportServiceImpl implements PetReportService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public void deleteReport(Long reportId) {
+        PetReport report = petReportRepository.findById(reportId)
+                .orElseThrow(() -> new RuntimeException("Reporte no encontrado"));
+
+        Usuario usuario = SecurityUtils.getCurrentUser();
+
+        validarPermiso(report, usuario);
+
+        petReportRepository.delete(report);
+    }
+
     private PetReportResponseDTO mapToResponse(PetReport report) {
 
         List<String> fotos = report.getFotos() != null
@@ -97,5 +122,38 @@ public class PetReportServiceImpl implements PetReportService {
                 .usuarioNombre(report.getUsuario().getNombre())
                 .fotos(fotos)
                 .build();
+    }
+
+    private void validarPermiso(PetReport report, Usuario usuario) {
+
+        // ADMIN puede todo
+        if (usuario.getRol().name().equals("ADMIN")) return;
+
+        // Si no es dueño → error
+        if (!report.getUsuario().getId().equals(usuario.getId())) {
+            throw new RuntimeException("No tenés permisos para esta acción");
+        }
+    }
+
+    @Override
+    public String uploadImage(Long reportId, MultipartFile file) {
+
+        PetReport report = petReportRepository.findById(reportId)
+                .orElseThrow(() -> new RuntimeException("Reporte no encontrado"));
+
+        Usuario usuario = SecurityUtils.getCurrentUser();
+
+        validarPermiso(report, usuario);
+
+        String url = cloudinaryService.uploadFile(file);
+
+        PetPhoto photo = PetPhoto.builder()
+                .imagenUrl(url)
+                .petReport(report)
+                .build();
+
+        petPhotoRepository.save(photo);
+
+        return url;
     }
 }
