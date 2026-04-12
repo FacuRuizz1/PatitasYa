@@ -1,0 +1,114 @@
+<div class="container mt-4">
+  <!-- Header -->
+  <div class="row mb-4">
+    <div class="col">
+      <h1 class="display-5">
+        <i class="bi bi-grid-3x3-gap-fill"></i> Reportes de Mascotas
+      </h1>
+      <p class="text-muted">Encontrá mascotas perdidas, encontradas o en adopción</p>
+    </div>
+    <div class="col-auto">
+      <a routerLink="/crear-reporte" class="btn btn-primary btn-lg">
+        <i class="bi bi-plus-circle"></i> Nuevo Reporte
+      </a>
+    </div>
+  </div>
+
+  <!-- Filtros -->
+  <div class="row mb-4">
+    <div class="col">
+      <div class="btn-group" role="group">
+        <button 
+          type="button" 
+          class="btn" 
+          [class.btn-primary]="filtroTipo === 'todos'"
+          [class.btn-outline-primary]="filtroTipo !== 'todos'"
+          (click)="filtrarPorTipo('todos')">
+          Todos
+        </button>
+        <button 
+          type="button" 
+          class="btn"
+          [class.btn-danger]="filtroTipo === tipos.PERDIDA"
+          [class.btn-outline-danger]="filtroTipo !== tipos.PERDIDA"
+          (click)="filtrarPorTipo(tipos.PERDIDA)">
+          {{ tiposLabels[tipos.PERDIDA] }}
+        </button>
+        <button 
+          type="button" 
+          class="btn"
+          [class.btn-success]="filtroTipo === tipos.ENCONTRADA"
+          [class.btn-outline-success]="filtroTipo !== tipos.ENCONTRADA"
+          (click)="filtrarPorTipo(tipos.ENCONTRADA)">
+          {{ tiposLabels[tipos.ENCONTRADA] }}
+        </button>
+        <button 
+          type="button" 
+          class="btn"
+          [class.btn-warning]="filtroTipo === tipos.ADOPCION"
+          [class.btn-outline-warning]="filtroTipo !== tipos.ADOPCION"
+          (click)="filtrarPorTipo(tipos.ADOPCION)">
+          {{ tiposLabels[tipos.ADOPCION] }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="text-center mt-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+    <p class="mt-2">Cargando reportes...</p>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    <i class="bi bi-exclamation-triangle-fill"></i> {{ errorMessage }}
+  </div>
+
+  <!-- Lista de reportes -->
+  <div *ngIf="!loading && !errorMessage" class="row">
+    <div *ngIf="reportes.length === 0" class="col-12 text-center">
+      <div class="alert alert-info">
+        <i class="bi bi-info-circle"></i> No hay reportes para mostrar
+      </div>
+    </div>
+
+    <div *ngFor="let reporte of reportes" class="col-md-6 col-lg-4 mb-4">
+      <div class="card h-100 shadow-sm hover-shadow">
+        <!-- Imagen -->
+        <div class="card-img-top text-center p-3 bg-light">
+          <span class="display-1">{{ getIconoPorTipo(reporte.tipo) }}</span>
+        </div>
+        
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start mb-2">
+            <h5 class="card-title mb-0">{{ reporte.titulo }}</h5>
+            <span class="badge bg-{{ getColorPorTipo(reporte.tipo) }}">
+              {{ tiposLabels[reporte.tipo] }}
+            </span>
+          </div>
+          
+          <p class="card-text text-muted small">
+            <i class="bi bi-person"></i> {{ reporte.usuarioNombre }} |
+            <i class="bi bi-calendar"></i> {{ reporte.createdAt | date:'dd/MM/yyyy' }}
+          </p>
+          
+          <p class="card-text">{{ reporte.descripcion | slice:0:100 }}...</p>
+          
+          <p class="card-text">
+            <i class="bi bi-geo-alt-fill text-danger"></i>
+            <small class="text-muted">{{ reporte.ubicacion }}</small>
+          </p>
+        </div>
+        
+        <div class="card-footer bg-transparent">
+          <button class="btn btn-outline-primary w-100" [routerLink]="['/reporte', reporte.id]">
+            Ver detalles <i class="bi bi-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

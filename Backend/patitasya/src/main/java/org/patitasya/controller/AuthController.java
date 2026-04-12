@@ -20,9 +20,10 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest){
         String token = authService.login(loginRequest.getEmail(), loginRequest.getPassword());
-
-        return ResponseEntity.ok(token);
+        return ResponseEntity.ok(new LoginResponse(token));
     }
+
+    record LoginResponse(String token) {}
 
 
 
