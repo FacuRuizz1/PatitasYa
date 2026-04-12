@@ -1,112 +1,80 @@
-<div class="container mt-4">
-  <!-- Header -->
-  <div class="row mb-4">
-    <div class="col">
-      <h1 class="display-5">
-        <i class="bi bi-grid-3x3-gap-fill"></i> Reportes de Mascotas
-      </h1>
-      <p class="text-muted">Encontrá mascotas perdidas, encontradas o en adopción</p>
-    </div>
-    <div class="col-auto">
-      <a routerLink="/crear-reporte" class="btn btn-primary btn-lg">
-        <i class="bi bi-plus-circle"></i> Nuevo Reporte
-      </a>
+<div class="reportes-container">
+  <div class="header-gradient">
+    <div class="container text-center">
+      <h1 class="display-4 mb-3">🐾 Encontrá a tu amigo</h1>
+      <p class="lead">Miles de mascotas esperan ser encontradas o encontrar un hogar</p>
     </div>
   </div>
 
-  <!-- Filtros -->
-  <div class="row mb-4">
-    <div class="col">
-      <div class="btn-group" role="group">
-        <button 
-          type="button" 
-          class="btn" 
-          [class.btn-primary]="filtroTipo === 'todos'"
-          [class.btn-outline-primary]="filtroTipo !== 'todos'"
-          (click)="filtrarPorTipo('todos')">
-          Todos
-        </button>
-        <button 
-          type="button" 
-          class="btn"
-          [class.btn-danger]="filtroTipo === tipos.PERDIDA"
-          [class.btn-outline-danger]="filtroTipo !== tipos.PERDIDA"
-          (click)="filtrarPorTipo(tipos.PERDIDA)">
-          {{ tiposLabels[tipos.PERDIDA] }}
-        </button>
-        <button 
-          type="button" 
-          class="btn"
-          [class.btn-success]="filtroTipo === tipos.ENCONTRADA"
-          [class.btn-outline-success]="filtroTipo !== tipos.ENCONTRADA"
-          (click)="filtrarPorTipo(tipos.ENCONTRADA)">
-          {{ tiposLabels[tipos.ENCONTRADA] }}
-        </button>
-        <button 
-          type="button" 
-          class="btn"
-          [class.btn-warning]="filtroTipo === tipos.ADOPCION"
-          [class.btn-outline-warning]="filtroTipo !== tipos.ADOPCION"
-          (click)="filtrarPorTipo(tipos.ADOPCION)">
-          {{ tiposLabels[tipos.ADOPCION] }}
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Loading -->
-  <div *ngIf="loading" class="text-center mt-5">
-    <div class="spinner-border text-primary" role="status">
-      <span class="visually-hidden">Cargando...</span>
-    </div>
-    <p class="mt-2">Cargando reportes...</p>
-  </div>
-
-  <!-- Error -->
-  <div *ngIf="errorMessage" class="alert alert-danger">
-    <i class="bi bi-exclamation-triangle-fill"></i> {{ errorMessage }}
-  </div>
-
-  <!-- Lista de reportes -->
-  <div *ngIf="!loading && !errorMessage" class="row">
-    <div *ngIf="reportes.length === 0" class="col-12 text-center">
-      <div class="alert alert-info">
-        <i class="bi bi-info-circle"></i> No hay reportes para mostrar
-      </div>
+  <div class="container">
+    <div class="filter-buttons mb-5">
+      <button 
+        class="filter-btn filter-btn-all"
+        [class.active]="filtroTipo === 'todos'"
+        (click)="filtrarPorTipo('todos')">
+        Todos
+      </button>
+      <button 
+        class="filter-btn filter-btn-perdida"
+        [class.active]="filtroTipo === tipos.PERDIDA"
+        (click)="filtrarPorTipo(tipos.PERDIDA)">
+        🐕 Perdidos
+      </button>
+      <button 
+        class="filter-btn filter-btn-encontrada"
+        [class.active]="filtroTipo === tipos.ENCONTRADA"
+        (click)="filtrarPorTipo(tipos.ENCONTRADA)">
+        🐈 Encontrados
+      </button>
+      <button 
+        class="filter-btn filter-btn-adopcion"
+        [class.active]="filtroTipo === tipos.ADOPCION"
+        (click)="filtrarPorTipo(tipos.ADOPCION)">
+        ❤️ Adopción
+      </button>
     </div>
 
-    <div *ngFor="let reporte of reportes" class="col-md-6 col-lg-4 mb-4">
-      <div class="card h-100 shadow-sm hover-shadow">
-        <!-- Imagen -->
-        <div class="card-img-top text-center p-3 bg-light">
-          <span class="display-1">{{ getIconoPorTipo(reporte.tipo) }}</span>
+    <div *ngIf="loading" class="loading-container">
+      <div class="loader"></div>
+      <p class="mt-3">Cargando reportes...</p>
+    </div>
+
+    <div *ngIf="errorMessage" class="alert alert-danger text-center">
+      {{ errorMessage }}
+    </div>
+
+    <div *ngIf="!loading && !errorMessage" class="row">
+      <div *ngIf="reportes.length === 0" class="col-12 text-center py-5">
+        <div class="empty-state">
+          <div class="empty-icon">📭</div>
+          <h3>No hay reportes</h3>
+          <p>Sé el primero en publicar un reporte</p>
+          <a routerLink="/crear-reporte" class="btn btn-primary">+ Publicar reporte</a>
         </div>
-        
-        <div class="card-body">
-          <div class="d-flex justify-content-between align-items-start mb-2">
-            <h5 class="card-title mb-0">{{ reporte.titulo }}</h5>
-            <span class="badge bg-{{ getColorPorTipo(reporte.tipo) }}">
-              {{ tiposLabels[reporte.tipo] }}
-            </span>
+      </div>
+
+      <div *ngFor="let reporte of reportes" class="col-md-6 col-lg-4 mb-4">
+        <div class="reporte-card" [routerLink]="['/reporte', reporte.id]">
+          <div class="card-image">
+            <span>{{ getIconoPorTipo(reporte.tipo) }}</span>
           </div>
-          
-          <p class="card-text text-muted small">
-            <i class="bi bi-person"></i> {{ reporte.usuarioNombre }} |
-            <i class="bi bi-calendar"></i> {{ reporte.createdAt | date:'dd/MM/yyyy' }}
-          </p>
-          
-          <p class="card-text">{{ reporte.descripcion | slice:0:100 }}...</p>
-          
-          <p class="card-text">
-            <i class="bi bi-geo-alt-fill text-danger"></i>
-            <small class="text-muted">{{ reporte.ubicacion }}</small>
-          </p>
-        </div>
-        
-        <div class="card-footer bg-transparent">
-          <button class="btn btn-outline-primary w-100" [routerLink]="['/reporte', reporte.id]">
-            Ver detalles <i class="bi bi-arrow-right"></i>
-          </button>
+          <div class="card-badge" [class.badge-perdida]="reporte.tipo === tipos.PERDIDA"
+               [class.badge-encontrada]="reporte.tipo === tipos.ENCONTRADA"
+               [class.badge-adopcion]="reporte.tipo === tipos.ADOPCION">
+            {{ tiposLabels[reporte.tipo] }}
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">{{ reporte.titulo }}</h3>
+            <div class="card-info">
+              <i class="bi bi-person"></i> {{ reporte.usuarioNombre }} • 
+              <i class="bi bi-calendar"></i> {{ reporte.createdAt | date:'dd/MM/yyyy' }}
+            </div>
+            <p class="card-description">{{ reporte.descripcion | slice:0:100 }}...</p>
+            <div class="card-location">
+              <i class="bi bi-geo-alt-fill text-danger"></i>
+              {{ reporte.ubicacion }}
+            </div>
+          </div>
         </div>
       </div>
     </div>
