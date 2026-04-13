@@ -1,1 +1,96 @@
-<p>detalle-reporte works!</p>
+<div class="detalle-container">
+  <!-- Botón volver -->
+  <div class="container mt-3">
+    <button class="btn-back" (click)="volver()">
+      <i class="bi bi-arrow-left"></i> Volver a reportes
+    </button>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="loading-container">
+    <div class="loader"></div>
+    <p>Cargando información...</p>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="errorMessage && !loading" class="container">
+    <div class="alert-custom alert-error">
+      <i class="bi bi-exclamation-triangle-fill"></i>
+      {{ errorMessage }}
+    </div>
+  </div>
+
+  <!-- Detalle del reporte -->
+  <div *ngIf="reporte && !loading" class="container">
+    <div class="detalle-card">
+      <!-- Header con imagen/icono -->
+      <div class="detalle-header" [style.background]="'linear-gradient(135deg, ' + getColorPorTipo(reporte.tipo) + ', ' + getColorPorTipo(reporte.tipo) + 'dd)'">
+        <div class="header-icon">
+          {{ getIconoPorTipo(reporte.tipo) }}
+        </div>
+        <div class="header-badge" [style.background]="getColorPorTipo(reporte.tipo)">
+          {{ tipoLabels[reporte.tipo] }}
+        </div>
+      </div>
+
+      <!-- Cuerpo del detalle -->
+      <div class="detalle-body">
+        <h1 class="detalle-titulo">{{ reporte.titulo }}</h1>
+        
+        <div class="detalle-meta">
+          <div class="meta-item">
+            <i class="bi bi-person-circle"></i>
+            <span>Publicado por: <strong>{{ reporte.usuarioNombre }}</strong></span>
+          </div>
+          <div class="meta-item">
+            <i class="bi bi-calendar3"></i>
+            <span>{{ reporte.createdAt | date:'EEEE, d \'de\' MMMM \'de\' yyyy' }}</span>
+          </div>
+        </div>
+
+        <div class="detalle-seccion">
+          <h3><i class="bi bi-card-text"></i> Descripción</h3>
+          <p>{{ reporte.descripcion }}</p>
+        </div>
+
+        <div class="detalle-seccion">
+          <h3><i class="bi bi-geo-alt-fill"></i> Ubicación</h3>
+          <div class="ubicacion-info">
+            <p><i class="bi bi-pin-map-fill text-danger"></i> {{ reporte.ubicacion }}</p>
+            <div *ngIf="reporte.latitud && reporte.longitud" class="mapa-preview">
+              <a [href]="'https://maps.google.com/?q=' + reporte.latitud + ',' + reporte.longitud" target="_blank" class="btn-mapa">
+                <i class="bi bi-map"></i> Ver en Google Maps
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fotos -->
+        <div *ngIf="reporte.fotos && reporte.fotos.length > 0" class="detalle-seccion">
+          <h3><i class="bi bi-images"></i> Fotos ({{ reporte.fotos.length }})</h3>
+          <div class="galeria">
+            <div *ngFor="let foto of reporte.fotos" class="galeria-item" (click)="abrirModal(foto)">
+              <img [src]="foto" alt="Foto de mascota" class="galeria-img">
+            </div>
+          </div>
+        </div>
+
+        <!-- Mensaje de ayuda según el tipo -->
+        <div class="detalle-ayuda" [style.background]="getColorPorTipo(reporte.tipo) + '10'" [style.borderLeftColor]="getColorPorTipo(reporte.tipo)">
+          <i class="bi bi-chat-dots-fill"></i>
+          <p>{{ getMensajeAyuda(reporte.tipo) }}</p>
+        </div>
+
+        <!-- Botones de acción -->
+        <div class="detalle-acciones">
+          <button class="btn-compartir" (click)="compartir()">
+            <i class="bi bi-share-fill"></i> Compartir
+          </button>
+          <button class="btn-contactar" (click)="contactar()">
+            <i class="bi bi-envelope-fill"></i> Contactar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

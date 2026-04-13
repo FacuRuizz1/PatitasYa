@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface PetReportRepository extends JpaRepository<PetReport,Long> {
@@ -14,4 +15,6 @@ public interface PetReportRepository extends JpaRepository<PetReport,Long> {
     List<PetReport> findByTipo(PostType tipo);
     List<PetReport> findByEstado(PostStatus estado);
     List<PetReport> findByUsuarioId(Long usuarioId);
+
+    Optional<PetReport> findById(Long id);
 }

@@ -17,6 +17,7 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   login(credentials: LoginRequest) : Observable<LoginResponse> {
+    localStorage.removeItem('token');
     return this.http.post<LoginResponse>(`${this.apiUrl}/auth/login`, credentials)
     .pipe(
       tap(response => {

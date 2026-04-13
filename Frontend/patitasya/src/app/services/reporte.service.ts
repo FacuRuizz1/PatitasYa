@@ -19,6 +19,11 @@ export class ReporteService {
     return this.http.get<PetReportResponse[]>(`${this.apiUrl}/report/listar`);
   }
 
+  //Obtener un reporte por ID
+  getReporteById(id: number): Observable<PetReportResponse> {
+    return this.http.get<PetReportResponse>(`${this.apiUrl}/report/${id}`);
+  }
+
   // Obtener reportes por tipo
   getReportsByType(tipo: string): Observable<PetReportResponse[]> {
     return this.http.get<PetReportResponse[]>(`${this.apiUrl}/report/tipo/${tipo}`);

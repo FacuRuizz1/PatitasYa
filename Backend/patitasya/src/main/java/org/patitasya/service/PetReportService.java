@@ -12,6 +12,7 @@ public interface PetReportService {
 
     PetReportResponseDTO createReport(PetReportRequestDTO dto);
     List<PetReportResponseDTO> getAllReports();
+    PetReportResponseDTO getReportById(Long id);
     List<PetReportResponseDTO> getReportsByType(PostType tipo);
     List<PetReportResponseDTO> getReportsByStatus(PostStatus estado);
     List<PetReportResponseDTO> getReportsByUser(Long usuarioId);

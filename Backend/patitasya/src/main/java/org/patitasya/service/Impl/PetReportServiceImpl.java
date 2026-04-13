@@ -68,6 +68,13 @@ public class PetReportServiceImpl implements PetReportService {
     }
 
     @Override
+    public PetReportResponseDTO getReportById(Long id) {
+        PetReport report = petReportRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Reporte no encontrado"));
+        return mapToResponse(report);
+    }
+
+    @Override
     public List<PetReportResponseDTO> getReportsByType(PostType tipo) {
         return petReportRepository.findByTipo(tipo)
                 .stream()

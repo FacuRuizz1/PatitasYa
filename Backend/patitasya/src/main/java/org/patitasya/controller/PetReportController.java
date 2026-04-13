@@ -75,4 +75,9 @@ public class PetReportController {
         );
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<PetReportResponseDTO> obtenerReportePorId(@PathVariable Long id){
+        return ResponseEntity.ok(petReportService.getReportById(id));
+    }
+
 }

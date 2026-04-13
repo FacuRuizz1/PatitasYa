@@ -31,6 +31,8 @@ export interface PetReportResponse {
   tipo: PostType;
   estado: PostStatus;
   ubicacion: string;
+  latitud?: number;
+  longitud?: number;
   createdAt: Date;
   usuarioNombre: string;
   fotos: string[];
