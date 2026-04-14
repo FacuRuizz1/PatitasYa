@@ -53,4 +53,46 @@ export class AuthService {
       return false;
     }
   }
+
+  // Obtener el email del usuario desde el token
+  getUserEmail(): string | null {
+    const token = this.getToken();
+    if (!token) return null;
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.sub;
+    } catch {
+      return null;
+    }
+  }
+  
+   // Obtener el rol del usuario desde el token
+  getUserRole(): string | null {
+    const token = this.getToken();
+    if (!token) return null;
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      // El rol puede venir como "rol", "ROLE" o en authorities
+      return payload.rol || payload.ROLE || null;
+    } catch {
+      return null;
+    }
+  }
+
+   // Verificar si es admin
+  isAdmin(): boolean {
+    const role = this.getUserRole();
+    return role === 'ADMIN' || role === 'ROLE_ADMIN';
+  }
+
+  // Obtener nombre del usuario (podés setearlo al login)
+  private userNameKey = 'userName';
+  
+  setUserName(name: string): void {
+    localStorage.setItem(this.userNameKey, name);
+  }
+  
+  getUserName(): string | null {
+    return localStorage.getItem(this.userNameKey);
+  }
 }

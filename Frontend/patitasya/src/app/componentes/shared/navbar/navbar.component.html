@@ -1,1 +1,72 @@
-<p>navbar works!</p>
+<nav class="navbar navbar-custom sticky-top">
+  <div class="container">
+    <!-- Logo y marca - izquierda -->
+    <a class="navbar-brand" routerLink="/reportes">
+      <span class="logo-icon">🐾</span>
+      <span class="brand-text">PatitasYa</span>
+    </a>
+
+    <!-- Perfil de usuario y menú hamburguesa - derecha -->
+    <div class="navbar-right">
+      <!-- Perfil de usuario (visible siempre en desktop) -->
+      <div class="user-profile desktop-only">
+        <div class="user-info">
+          <div class="user-avatar">
+            {{ getRoleIcon() }}
+          </div>
+          <div class="user-details">
+            <div class="user-name">{{ userName }}</div>
+            <div class="user-role">
+              <span class="role-badge" [class]="getRoleBadgeClass()">
+                {{ getRoleText() }}
+              </span>
+            </div>
+          </div>
+        </div>
+        <button class="btn-logout" (click)="logout()" title="Cerrar sesión">
+          <i class="bi bi-box-arrow-right"></i>
+        </button>
+      </div>
+
+      <!-- Botón hamburguesa (visible solo en mobile) -->
+      <button class="navbar-toggler" type="button" (click)="toggleMenu()">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+
+    <!-- Menú mobile (se despliega cuando se toca el botón) -->
+    <div class="navbar-menu" [class.show]="menuOpen">
+      <!-- Perfil de usuario en mobile -->
+      <div class="user-profile-mobile">
+        <div class="user-avatar">
+          {{ getRoleIcon() }}
+        </div>
+        <div class="user-info-mobile">
+          <div class="user-name">{{ userName }}</div>
+          <div class="user-role">
+            <span class="role-badge" [class]="getRoleBadgeClass()">
+              {{ getRoleText() }}
+            </span>
+          </div>
+        </div>
+        <button class="btn-logout-mobile" (click)="logout()">
+          <i class="bi bi-box-arrow-right"></i> Cerrar sesión
+        </button>
+      </div>
+
+      <!-- Menú de navegación mobile -->
+      <ul class="navbar-nav-mobile">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/reportes" routerLinkActive="active" (click)="menuOpen=false">
+            <i class="bi bi-grid-3x3-gap-fill"></i> Reportes
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="isAdmin">
+          <a class="nav-link" routerLink="/admin" routerLinkActive="active" (click)="menuOpen=false">
+            <i class="bi bi-shield-lock-fill"></i> Administración
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
