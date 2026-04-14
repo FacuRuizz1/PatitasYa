@@ -1,1 +1,170 @@
-<p>crear-reporte works!</p>
+<div class="crear-container">
+  <div class="container">
+    <!-- Botón volver -->
+    <div class="mt-3">
+      <button class="btn-back" (click)="router.navigate(['/reportes'])">
+        <i class="bi bi-arrow-left"></i> Volver a reportes
+      </button>
+    </div>
+
+    <div class="crear-card">
+      <div class="crear-header">
+        <div class="header-icon">📝</div>
+        <h1>Publicar nuevo reporte</h1>
+        <p>Completá el formulario para ayudar a una mascota</p>
+      </div>
+
+      <div class="crear-body">
+        <!-- Mensajes -->
+        <div *ngIf="successMessage" class="alert-custom alert-success">
+          <i class="bi bi-check-circle-fill"></i>
+          {{ successMessage }}
+        </div>
+        <div *ngIf="errorMessage" class="alert-custom alert-error">
+          <i class="bi bi-exclamation-triangle-fill"></i>
+          {{ errorMessage }}
+        </div>
+
+        <form [formGroup]="reporteForm" (ngSubmit)="onSubmit()">
+          <!-- Tipo de reporte -->
+          <div class="form-group">
+            <label class="form-label">
+              <i class="bi bi-tag"></i> Tipo de reporte *
+            </label>
+            <select 
+              class="form-select" 
+              formControlName="tipo"
+              (change)="onTipoChange($event)"
+              [class.is-invalid]="tipo?.invalid && tipo?.touched">
+              <option [value]="tipos.PERDIDA">🐕 Perdido - Busco a mi mascota</option>
+              <option [value]="tipos.ENCONTRADA">🐈 Encontrado - Encontré una mascota</option>
+              <option [value]="tipos.ADOPCION">🐾 Adopción - Mascota en busca de hogar</option>
+            </select>
+            <div class="help-message">{{ getMensajeAyuda() }}</div>
+          </div>
+
+          <!-- Título -->
+          <div class="form-group">
+            <label class="form-label">
+              <i class="bi bi-chat-text"></i> Título *
+            </label>
+            <input 
+              type="text" 
+              class="form-control" 
+              formControlName="titulo"
+              placeholder="Ej: Perdí a mi perro Max, Ayuda a encontrar a Luna, etc."
+              [class.is-invalid]="titulo?.invalid && titulo?.touched">
+            <div class="invalid-feedback" *ngIf="titulo?.invalid && titulo?.touched">
+              <span *ngIf="titulo?.errors?.['required']">El título es requerido</span>
+              <span *ngIf="titulo?.errors?.['minlength']">Mínimo 5 caracteres</span>
+              <span *ngIf="titulo?.errors?.['maxlength']">Máximo 100 caracteres</span>
+            </div>
+          </div>
+
+          <!-- Descripción -->
+          <div class="form-group">
+            <label class="form-label">
+              <i class="bi bi-file-text"></i> Descripción *
+            </label>
+            <textarea 
+              rows="5" 
+              class="form-control" 
+              formControlName="descripcion"
+              placeholder="Contá todos los detalles: raza, color, tamaño, señas particulares, último lugar donde se vio, etc."
+              [class.is-invalid]="descripcion?.invalid && descripcion?.touched"></textarea>
+            <div class="invalid-feedback" *ngIf="descripcion?.invalid && descripcion?.touched">
+              <span *ngIf="descripcion?.errors?.['required']">La descripción es requerida</span>
+              <span *ngIf="descripcion?.errors?.['minlength']">Mínimo 10 caracteres</span>
+              <span *ngIf="descripcion?.errors?.['maxlength']">Máximo 500 caracteres</span>
+            </div>
+            <div class="char-counter">{{ descripcion?.value?.length || 0 }}/500</div>
+          </div>
+
+          <!-- Ubicación -->
+          <div class="form-group">
+            <label class="form-label">
+              <i class="bi bi-geo-alt"></i> Ubicación *
+            </label>
+            <input 
+              type="text" 
+              class="form-control" 
+              formControlName="ubicacion"
+              placeholder="Ej: Palermo, CABA o Calle Falsa 123, Springfiel"
+              [class.is-invalid]="ubicacion?.invalid && ubicacion?.touched">
+            <div class="invalid-feedback" *ngIf="ubicacion?.invalid && ubicacion?.touched">
+              La ubicación es requerida
+            </div>
+          </div>
+
+          <!-- Coordenadas (opcional) -->
+          <div class="form-row">
+            <div class="form-group half">
+              <label class="form-label">
+                <i class="bi bi-crosshair"></i> Latitud (opcional)
+              </label>
+              <input 
+                type="number" 
+                step="any" 
+                class="form-control" 
+                formControlName="latitud"
+                placeholder="Ej: -34.603722">
+            </div>
+            <div class="form-group half">
+              <label class="form-label">
+                <i class="bi bi-crosshair"></i> Longitud (opcional)
+              </label>
+              <input 
+                type="number" 
+                step="any" 
+                class="form-control" 
+                formControlName="longitud"
+                placeholder="Ej: -58.381592">
+            </div>
+          </div>
+
+          <!-- Fotos -->
+          <div class="form-group">
+            <label class="form-label">
+              <i class="bi bi-images"></i> Fotos de la mascota
+            </label>
+            <div class="upload-area">
+              <input 
+                type="file" 
+                id="fotos" 
+                multiple 
+                accept="image/*"
+                (change)="onFilesSelected($event)"
+                style="display: none;">
+              <label for="fotos" class="upload-label">
+                <i class="bi bi-cloud-upload"></i>
+                <span>Hacé clic o arrastrá fotos</span>
+                <small>Podés subir varias fotos</small>
+              </label>
+            </div>
+
+            <!-- Previews -->
+            <div *ngIf="previewUrls.length > 0" class="previews-container">
+              <div *ngFor="let preview of previewUrls; let i = index" class="preview-item">
+                <img [src]="preview" alt="Preview" class="preview-img">
+                <button type="button" class="btn-remove" (click)="eliminarImagen(i)">
+                  <i class="bi bi-x-circle"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Botón submit -->
+          <div class="form-actions">
+            <button type="button" class="btn-cancelar" (click)="router.navigate(['/reportes'])">
+              Cancelar
+            </button>
+            <button type="submit" class="btn-publicar" [disabled]="reporteForm.invalid || loading">
+              <span *ngIf="!loading">Publicar reporte</span>
+              <div *ngIf="loading" class="spinner-small"></div>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
