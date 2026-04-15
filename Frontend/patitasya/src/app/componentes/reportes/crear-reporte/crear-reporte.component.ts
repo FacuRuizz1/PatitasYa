@@ -5,6 +5,7 @@ import { Router, RouterLink } from '@angular/router';
 import { PostType } from '../../../models/enums';
 import { PostTypeLabels } from '../../../models/Reporte';
 import { ReporteService } from '../../../services/reporte.service';
+import { AlertService } from '../../../services/alert.service';
 
 @Component({
   selector: 'app-crear-reporte',
@@ -27,7 +28,8 @@ export class CrearReporteComponent {
    constructor(
     private fb: FormBuilder,
     private reporteService: ReporteService,
-    public router: Router
+    public router: Router,
+    public alertService: AlertService
   ) {
     this.reporteForm = this.fb.group({
       titulo: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
@@ -73,15 +75,11 @@ export class CrearReporteComponent {
     this.previewUrls.splice(index, 1);
   }
 
-  onSubmit(): void {
-    if (this.reporteForm.invalid) {
-      // Marcar todos los campos como tocados
-      Object.keys(this.reporteForm.controls).forEach(key => {
-        const control = this.reporteForm.get(key);
-        control?.markAsTouched();
-      });
-      return;
-    }
+ onSubmit(): void {
+  if (this.reporteForm.invalid) {
+    this.alertService.warning('Completá todos los campos requeridos', 'Formulario incompleto');
+    return;
+  }
 
     this.loading = true;
     this.errorMessage = '';
@@ -99,7 +97,7 @@ export class CrearReporteComponent {
 
      this.reporteService.createReport(formData).subscribe({
       next: (response) => {
-        this.successMessage = '¡Reporte creado exitosamente!';
+       this.alertService.success('Tu reporte ha sido publicado exitosamente', '¡Reporte creado!');
         
         // Si hay imágenes, subirlas
         if (this.imagenesSeleccionadas.length > 0) {
@@ -115,11 +113,11 @@ export class CrearReporteComponent {
         console.error('Error al crear reporte:', error);
         
         if (error.status === 403) {
-          this.errorMessage = 'No tenés permisos para crear reportes. Iniciá sesión nuevamente.';
+         this.alertService.error('No tenés permisos para crear reportes', 'Acceso denegado');
         } else if (error.error?.message) {
           this.errorMessage = error.error.message;
         } else {
-          this.errorMessage = 'Error al crear el reporte. Intentalo nuevamente.';
+          this.alertService.error('Hubo un problema al crear el reporte. Intentá nuevamente.', 'Error');
         }
       }
     });
