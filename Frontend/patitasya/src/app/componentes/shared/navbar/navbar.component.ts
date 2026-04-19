@@ -22,16 +22,15 @@ export class NavbarComponent {
     private router: Router
   ) {}
 
-  ngOnInit(): void {
-    this.userName = this.authService.getUserName();
-    this.userRole = this.authService.getUserRole();
-    this.isAdmin = this.authService.isAdmin();
-    
-    // Si no hay nombre, usar email
-    if (!this.userName) {
-      this.userName = this.authService.getUserEmail()?.split('@')[0] || 'Usuario';
-    }
+ ngOnInit(): void {
+  this.userName = this.authService.getUserName();
+  this.userRole = this.authService.getUserRole();
+  this.isAdmin = this.authService.isAdmin();
+
+  if (!this.userName) {
+    this.userName = this.authService.getUserEmail()?.split('@')[0] || 'Usuario';
   }
+}
 
    logout(): void {
     this.authService.logout();

@@ -12,29 +12,37 @@ export class AuthService {
 
   private apiUrl = environment.apiUrl;
   private tokenKey = 'token';
+  private userNameKey = 'userName';
+  private roleKey = 'userRole';
+
 
 
   constructor(private http: HttpClient) { }
 
-  login(credentials: LoginRequest) : Observable<LoginResponse> {
-    localStorage.removeItem('token');
-    return this.http.post<LoginResponse>(`${this.apiUrl}/auth/login`, credentials)
+  login(credentials: LoginRequest): Observable<LoginResponse> {
+  localStorage.removeItem('token');
+  return this.http.post<LoginResponse>(`${this.apiUrl}/auth/login`, credentials)
     .pipe(
       tap(response => {
-        if(response.token){
-          localStorage.setItem(this.tokenKey, response.token)
+        if (response.token) {
+          localStorage.setItem(this.tokenKey, response.token);
+          localStorage.setItem(this.userNameKey, response.nombre);
+          localStorage.setItem(this.roleKey, response.rol);
         }
       })
     );
-  }
+}
+
 
   register(usuario: UsuarioRequest) : Observable<Usuario> {
     return this.http.post<Usuario>(`${this.apiUrl}/usuario/crear`, usuario);
   }
 
    logout(): void {
-    localStorage.removeItem(this.tokenKey);
-  }
+   localStorage.removeItem(this.tokenKey);
+   localStorage.removeItem(this.userNameKey);
+   localStorage.removeItem(this.roleKey);
+   } 
 
    getToken(): string | null {
     return localStorage.getItem(this.tokenKey);
@@ -66,18 +74,9 @@ export class AuthService {
     }
   }
   
-   // Obtener el rol del usuario desde el token
-  getUserRole(): string | null {
-    const token = this.getToken();
-    if (!token) return null;
-    try {
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      // El rol puede venir como "rol", "ROLE" o en authorities
-      return payload.rol || payload.ROLE || null;
-    } catch {
-      return null;
-    }
-  }
+ getUserRole(): string | null {
+  return localStorage.getItem(this.roleKey);
+}
 
    // Verificar si es admin
   isAdmin(): boolean {
@@ -85,8 +84,7 @@ export class AuthService {
     return role === 'ADMIN' || role === 'ROLE_ADMIN';
   }
 
-  // Obtener nombre del usuario (podés setearlo al login)
-  private userNameKey = 'userName';
+
   
   setUserName(name: string): void {
     localStorage.setItem(this.userNameKey, name);

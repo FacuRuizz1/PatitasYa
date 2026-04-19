@@ -31,38 +31,26 @@ export class LoginComponent {
   }
 
   onSubmit(): void {
-    if (this.loginForm.invalid) {
-      this.alertService.warning('Completá todos los campos correctamente', 'Campos incompletos');
-      return;
-    }
-
-    this.loading = true;
-
-    this.authService.login(this.loginForm.value).subscribe({
-      next: (response) => {
-        console.log('Login exitoso:', response);
-        
-        // Decodificar el token
-        const token = response.token;
-        const payload = JSON.parse(atob(token.split('.')[1]));
-        
-        // Guardar información del usuario
-        const userName = payload.nombre || payload.name || this.loginForm.value.email.split('@')[0];
-        this.authService.setUserName(userName);
-        
-        const userRole = payload.rol || payload.role || 'USER';
-        this.authService.setUserName(userRole);
-        
-        this.alertService.success(`¡Bienvenido ${userName}!`, 'Inicio de sesión exitoso');
-        this.router.navigate(['/reportes']);
-      },
-      error: (error) => {
-        console.error('Error de login:', error);
-        this.loading = false;
-        this.alertService.error('Email o contraseña incorrectos', 'Error de autenticación');
-      }
-    });
+  if (this.loginForm.invalid) {
+    this.alertService.warning('Completá todos los campos correctamente', 'Campos incompletos');
+    return;
   }
-  
+
+  this.loading = true;
+
+  this.authService.login(this.loginForm.value).subscribe({
+    next: (response) => {
+      console.log('Login exitoso:', response);
+      const userName = this.authService.getUserName() || response.nombre || 'Usuario';
+      this.alertService.success(`¡Bienvenido ${userName}!`, 'Inicio de sesión exitoso');
+      this.router.navigate(['/reportes']);
+    },
+    error: (error) => {
+      console.error('Error de login:', error);
+      this.loading = false;
+      this.alertService.error('Email o contraseña incorrectos', 'Error de autenticación');
+    }
+  });
+}
 
 }

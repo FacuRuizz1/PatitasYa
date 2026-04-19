@@ -3,6 +3,7 @@ package org.patitasya.controller;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.patitasya.auth.LoginRequest;
+import org.patitasya.auth.LoginResponseDTO;
 import org.patitasya.service.AuthService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,12 +19,10 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest){
-        String token = authService.login(loginRequest.getEmail(), loginRequest.getPassword());
-        return ResponseEntity.ok(new LoginResponse(token));
+    public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequest loginRequest) {
+        LoginResponseDTO response = authService.login(loginRequest.getEmail(), loginRequest.getPassword());
+        return ResponseEntity.ok(response);
     }
-
-    record LoginResponse(String token) {}
 
 
 
