@@ -1,39 +1,32 @@
 @import 'bootstrap/dist/css/bootstrap.min.css';
-
-/* ========================================
-   TEMA 1: WARM & LOVE - PatitasYa
-   Colores cálidos y amorosos para mascotas
-   ======================================== */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
 
 :root {
-  /* Colores principales */
-  --primary-color: #FF6B6B;     /* Rosa coral - principal */
-  --primary-dark: #EE5A24;      /* Naranja intenso */
-  --primary-light: #FFA8A8;     /* Rosa claro */
-  --primary-lighter: #FFF0F0;   /* Rosa muy claro */
-  
-  /* Colores secundarios */
-  --secondary-color: #FF9F43;   /* Naranja cálido */
-  --secondary-light: #FFC48A;   /* Naranja claro */
-  --secondary-lighter: #FFF4E6; /* Naranja muy claro */
-  
-  /* Colores de acento */
-  --accent-perdida: #FF6B6B;    /* Rojo coral - Perdido */
-  --accent-encontrada: #0ABD8B; /* Verde menta - Encontrado */
-  --accent-adopcion: #FF9F43;   /* Naranja - Adopción */
-  --accent-success: #0ABD8B;    /* Verde éxito */
-  --accent-warning: #FF9F43;    /* Naranja advertencia */
-  --accent-danger: #FF6B6B;     /* Rojo peligro */
-  
-  /* Neutrales */
-  --text-dark: #2C3E50;
-  --text-gray: #7F8C8D;
-  --text-light: #BDC3C7;
-  --background: #FFF5F0;        /* Fondo crema rosado */
-  --background-dark: #FFE8E0;   /* Fondo más oscuro */
-  --white: #FFFFFF;
-  --shadow: 0 10px 30px rgba(255, 107, 107, 0.1);
-  --shadow-hover: 0 15px 40px rgba(255, 107, 107, 0.15);
+  --primary-color: #5ED4A0;
+  --primary-dark: #3DB882;
+  --primary-light: #9EEACC;
+  --primary-lighter: #1A2E1E;
+
+  --secondary-color: #F5B84A;
+  --secondary-light: #F8D08A;
+  --secondary-lighter: #2E2010;
+
+  --accent-perdida: #F28B6E;
+  --accent-encontrada: #5ED4A0;
+  --accent-adopcion: #F5B84A;
+  --accent-success: #5ED4A0;
+  --accent-warning: #F5B84A;
+  --accent-danger: #F28B6E;
+
+  --text-dark: #F5EFE6;
+  --text-gray: #9A8A78;
+  --text-light: #6A5A48;
+  --background: #1C1410;
+  --background-dark: #2A1E14;
+  --white: #2A1E14;
+  --surface: #2A1E14;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  --shadow-hover: 0 15px 40px rgba(0, 0, 0, 0.5);
 }
 
 * {
@@ -43,66 +36,47 @@
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   background: var(--background);
   color: var(--text-dark);
 }
 
-/* Scrollbar personalizada */
-::-webkit-scrollbar {
-  width: 10px;
-}
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #2A1E14; }
+::-webkit-scrollbar-thumb { background: #3D2E1E; border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: var(--primary-color); }
 
-::-webkit-scrollbar-track {
-  background: var(--background-dark);
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--primary-color);
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--primary-dark);
-}
-
-/* Botón primario */
 .btn-primary {
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  background: var(--primary-color);
+  color: #0D1F15;
   border: none;
   padding: 12px 30px;
-  border-radius: 50px;
-  font-weight: 600;
-  color: white;
+  border-radius: 99px;
+  font-weight: 800;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   transition: all 0.3s;
 }
 
 .btn-primary:hover {
+  background: var(--primary-dark);
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+  box-shadow: 0 5px 20px rgba(94, 212, 160, 0.3);
+  color: #0D1F15;
 }
 
-.btn-primary:active {
-  transform: translateY(0);
-}
-
-/* Enlaces */
 a {
   color: var(--primary-color);
   text-decoration: none;
   transition: all 0.3s;
 }
 
-a:hover {
-  color: var(--primary-dark);
-}
+a:hover { color: var(--primary-dark); }
 
-/* Cards */
 .card {
   border: none;
   border-radius: 20px;
   box-shadow: var(--shadow);
+  background: var(--surface);
   transition: all 0.3s;
   overflow: hidden;
 }
@@ -112,18 +86,9 @@ a:hover {
   box-shadow: var(--shadow-hover);
 }
 
-/* Animaciones */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-.fade-in {
-  animation: fadeIn 0.5s ease;
-}
+.fade-in { animation: fadeIn 0.5s ease; }

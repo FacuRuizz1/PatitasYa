@@ -94,4 +94,10 @@ public class PetReportController {
             @RequestParam PostStatus estado){
         return ResponseEntity.ok(petReportService.updateReportStatus(id, estado));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminarReporte(@PathVariable Long id) {
+        petReportService.deleteReport(id);
+        return ResponseEntity.noContent().build();
+    }
 }

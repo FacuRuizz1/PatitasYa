@@ -1,8 +1,7 @@
-/* ── Overlay ── */
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(44, 62, 80, 0.5);
+  background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
@@ -17,15 +16,15 @@
   to   { opacity: 1; }
 }
 
-/* ── Contenedor ── */
 .modal-container {
-  background: var(--white);
-  border-radius: 30px;
+  background: #2A1E14;
+  border-radius: 24px;
   width: 100%;
   max-width: 540px;
-  box-shadow: 0 20px 60px rgba(255, 107, 107, 0.2);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.6);
   animation: slideUp 0.25s ease;
   overflow: hidden;
+  border: 1px solid #3D2E1E;
 }
 
 @keyframes slideUp {
@@ -33,14 +32,13 @@
   to   { transform: translateY(0);    opacity: 1; }
 }
 
-/* ── Header ── */
 .modal-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 1.25rem 1.75rem;
-  background: var(--primary-lighter);
-  border-bottom: 2px solid #f0f0f0;
+  background: #1C1410;
+  border-bottom: 1px solid #3D2E1E;
 }
 
 .modal-title {
@@ -51,32 +49,30 @@
 
 .modal-title h2 {
   margin: 0;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 700;
-  color: var(--text-dark);
+  color: #F5EFE6;
 }
 
-.paw-icon {
-  font-size: 1.4rem;
-}
+.paw-icon { font-size: 1.3rem; }
 
 .btn-close {
   background: none;
   border: none;
   font-size: 1rem;
-  color: var(--text-gray);
+  color: #9A8A78;
   cursor: pointer;
   padding: 0.3rem 0.6rem;
-  border-radius: 50px;
+  border-radius: 99px;
   transition: background 0.2s, color 0.2s;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 .btn-close:hover {
-  background: var(--background-dark);
-  color: var(--text-dark);
+  background: #3D2E1E;
+  color: #F5EFE6;
 }
 
-/* ── Body ── */
 .modal-body {
   padding: 1.75rem;
   display: flex;
@@ -87,10 +83,10 @@
 }
 
 .error-banner {
-  background: #ffebee;
+  background: #2A1410;
   border-left: 4px solid var(--accent-danger);
-  color: #c62828;
-  border-radius: 0 12px 12px 0;
+  color: var(--accent-danger);
+  border-radius: 0;
   padding: 0.75rem 1rem;
   font-size: 0.875rem;
   display: flex;
@@ -98,7 +94,6 @@
   align-items: center;
 }
 
-/* ── Campos ── */
 .field-group {
   display: flex;
   flex-direction: column;
@@ -112,133 +107,107 @@
 }
 
 label {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--text-dark);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #9A8A78;
+  letter-spacing: .04em;
+  text-transform: uppercase;
 }
 
-.required {
-  color: var(--accent-danger);
-}
+.required { color: var(--accent-danger); }
 
-input,
-textarea,
-select {
-  border: 2px solid #f0f0f0;
-  border-radius: 15px;
+input, textarea, select {
+  border: 1.5px solid #3D2E1E;
+  border-radius: 12px;
   padding: 0.65rem 1rem;
   font-size: 0.9rem;
-  color: var(--text-dark);
-  background: var(--background);
+  color: #F5EFE6;
+  background: #1C1410;
   transition: border-color 0.2s, box-shadow 0.2s;
   outline: none;
-  font-family: inherit;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   width: 100%;
   box-sizing: border-box;
 }
 
-input:focus,
-textarea:focus,
-select:focus {
+input:focus, textarea:focus, select:focus {
   border-color: var(--primary-color);
-  box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.1);
-  background: var(--white);
+  box-shadow: 0 0 0 3px rgba(94, 212, 160, 0.15);
 }
 
-textarea {
-  resize: vertical;
-}
+select option { background: #2A1E14; }
+textarea { resize: vertical; }
 
-/* ── Footer ── */
 .modal-footer {
   display: flex;
   justify-content: flex-end;
   gap: 0.75rem;
   padding: 1rem 1.75rem;
-  border-top: 2px solid #f0f0f0;
-  background: var(--primary-lighter);
+  border-top: 1px solid #3D2E1E;
+  background: #1C1410;
 }
 
 .btn-cancelar {
-  background: var(--white);
-  color: var(--text-gray);
-  border: 2px solid #f0f0f0;
-  border-radius: 50px;
+  background: transparent;
+  color: #9A8A78;
+  border: 1.5px solid #3D2E1E;
+  border-radius: 99px;
   padding: 0.6rem 1.5rem;
   font-size: 0.9rem;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   transition: all 0.2s;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 .btn-cancelar:hover:not(:disabled) {
-  background: var(--background-dark);
-  color: var(--text-dark);
-  transform: translateY(-1px);
+  background: #3D2E1E;
+  color: #F5EFE6;
 }
 
 .btn-guardar {
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-  color: var(--white);
+  background: var(--primary-color);
+  color: #0D1F15;
   border: none;
-  border-radius: 50px;
+  border-radius: 99px;
   padding: 0.6rem 1.75rem;
   font-size: 0.9rem;
-  font-weight: 700;
+  font-weight: 800;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
   transition: all 0.3s;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 .btn-guardar:hover:not(:disabled) {
+  background: var(--primary-dark);
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
-}
-
-.btn-guardar:active:not(:disabled) {
-  transform: translateY(0);
+  box-shadow: 0 5px 20px rgba(94, 212, 160, 0.3);
 }
 
 .btn-guardar:disabled,
 .btn-cancelar:disabled {
-  opacity: 0.6;
+  opacity: 0.4;
   cursor: not-allowed;
 }
 
-/* ── Spinner ── */
 .spinner {
   width: 14px;
   height: 14px;
-  border: 2px solid rgba(255, 255, 255, 0.4);
-  border-top-color: var(--white);
+  border: 2px solid rgba(13, 31, 21, 0.3);
+  border-top-color: #0D1F15;
   border-radius: 50%;
   animation: spin 0.7s linear infinite;
   display: inline-block;
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
+@keyframes spin { to { transform: rotate(360deg); } }
 
-/* ── Responsive ── */
 @media (max-width: 768px) {
-  .modal-container {
-    border-radius: 20px;
-  }
-
-  .modal-body {
-    padding: 1.25rem;
-    max-height: 65vh;
-  }
-
-  .modal-header,
-  .modal-footer {
-    padding: 1rem 1.25rem;
-  }
-
-  .field-row {
-    grid-template-columns: 1fr;
-  }
+  .modal-container { border-radius: 20px; }
+  .modal-body { padding: 1.25rem; max-height: 65vh; }
+  .modal-header, .modal-footer { padding: 1rem 1.25rem; }
+  .field-row { grid-template-columns: 1fr; }
 }

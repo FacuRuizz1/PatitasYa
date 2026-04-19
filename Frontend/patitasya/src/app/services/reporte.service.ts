@@ -53,5 +53,9 @@ export class ReporteService {
 
   updateReport(id: number, reporte: PetReportRequest): Observable<PetReportResponse> {
   return this.http.put<PetReportResponse>(`${this.apiUrl}/report/${id}`, reporte);
-}
+  }
+
+  deleteReport(id: number): Observable<void> {
+  return this.http.delete<void>(`${this.apiUrl}/report/${id}`);
+  }
 }

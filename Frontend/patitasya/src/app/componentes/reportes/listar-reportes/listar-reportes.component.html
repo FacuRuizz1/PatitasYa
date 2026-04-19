@@ -4,14 +4,11 @@
       <h1 class="display-4 mb-3">🐾 Encontrá a tu amigo</h1>
       <p class="lead">Miles de mascotas esperan ser encontradas o encontrar un hogar</p>
       
-       <!-- Botón Crear Reporte agregado aquí -->
       <div class="mt-4">
         <a routerLink="/crear-reporte" class="btn-crear-reporte">
           <i class="bi bi-plus-circle"></i> Publicar nuevo reporte
         </a>
-      
-    </div>
-      
+      </div>
     </div>
   </div>
 
@@ -65,9 +62,18 @@
       <div *ngFor="let reporte of reportes" class="col-md-6 col-lg-4 mb-4">
         <div class="reporte-card" [routerLink]="['/reporte', reporte.id]">
           <div class="card-image">
-            <span>{{ getIconoPorTipo(reporte.tipo) }}</span>
+            <img
+              *ngIf="reporte.fotos && reporte.fotos.length > 0"
+              [src]="reporte.fotos[0]"
+              alt="{{ reporte.titulo }}"
+              class="card-img-preview"
+            />
+            <span *ngIf="!reporte.fotos || reporte.fotos.length === 0">
+              {{ getIconoPorTipo(reporte.tipo) }}
+            </span>
           </div>
-          <div class="card-badge" [class.badge-perdida]="reporte.tipo === tipos.PERDIDA"
+          <div class="card-badge"
+               [class.badge-perdida]="reporte.tipo === tipos.PERDIDA"
                [class.badge-encontrada]="reporte.tipo === tipos.ENCONTRADA"
                [class.badge-adopcion]="reporte.tipo === tipos.ADOPCION">
             {{ tiposLabels[reporte.tipo] }}
