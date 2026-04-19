@@ -1,32 +1,32 @@
 @import 'bootstrap/dist/css/bootstrap.min.css';
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;700&display=swap');
 
 :root {
-  --primary-color: #5ED4A0;
-  --primary-dark: #3DB882;
-  --primary-light: #9EEACC;
-  --primary-lighter: #1A2E1E;
+  --primary-color: #C4703A;
+  --primary-dark: #A85A28;
+  --primary-light: #E8A070;
+  --primary-lighter: #FAE8D8;
 
-  --secondary-color: #F5B84A;
-  --secondary-light: #F8D08A;
-  --secondary-lighter: #2E2010;
+  --secondary-color: #E8A844;
+  --secondary-light: #F5CC80;
+  --secondary-lighter: #FDF0D8;
 
-  --accent-perdida: #F28B6E;
-  --accent-encontrada: #5ED4A0;
-  --accent-adopcion: #F5B84A;
-  --accent-success: #5ED4A0;
-  --accent-warning: #F5B84A;
-  --accent-danger: #F28B6E;
+  --accent-perdida: #C4703A;
+  --accent-encontrada: #4A8A30;
+  --accent-adopcion: #C48A20;
+  --accent-success: #4A8A30;
+  --accent-warning: #C48A20;
+  --accent-danger: #C4703A;
 
-  --text-dark: #F5EFE6;
-  --text-gray: #9A8A78;
-  --text-light: #6A5A48;
-  --background: #1C1410;
-  --background-dark: #2A1E14;
-  --white: #2A1E14;
-  --surface: #2A1E14;
-  --shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-  --shadow-hover: 0 15px 40px rgba(0, 0, 0, 0.5);
+  --text-dark: #1A1208;
+  --text-gray: #8A7A60;
+  --text-light: #B8A890;
+  --background: #FAF7F2;
+  --background-dark: #F0E8D8;
+  --white: #FFFFFF;
+  --surface: #F0E8D8;
+  --shadow: 0 10px 30px rgba(26, 18, 8, 0.08);
+  --shadow-hover: 0 15px 40px rgba(26, 18, 8, 0.14);
 }
 
 * {
@@ -36,32 +36,32 @@
 }
 
 body {
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   background: var(--background);
   color: var(--text-dark);
 }
 
 ::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: #2A1E14; }
-::-webkit-scrollbar-thumb { background: #3D2E1E; border-radius: 99px; }
+::-webkit-scrollbar-track { background: #F0E8D8; }
+::-webkit-scrollbar-thumb { background: #C4A880; border-radius: 99px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--primary-color); }
 
 .btn-primary {
   background: var(--primary-color);
-  color: #0D1F15;
+  color: #FAF7F2;
   border: none;
   padding: 12px 30px;
   border-radius: 99px;
-  font-weight: 800;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  font-family: 'DM Sans', sans-serif;
   transition: all 0.3s;
 }
 
 .btn-primary:hover {
   background: var(--primary-dark);
+  color: #FAF7F2;
   transform: translateY(-2px);
-  box-shadow: 0 5px 20px rgba(94, 212, 160, 0.3);
-  color: #0D1F15;
+  box-shadow: 0 5px 20px rgba(196, 112, 58, 0.3);
 }
 
 a {
@@ -76,7 +76,7 @@ a:hover { color: var(--primary-dark); }
   border: none;
   border-radius: 20px;
   box-shadow: var(--shadow);
-  background: var(--surface);
+  background: var(--white);
   transition: all 0.3s;
   overflow: hidden;
 }

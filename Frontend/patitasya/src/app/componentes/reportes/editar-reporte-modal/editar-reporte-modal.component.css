@@ -1,7 +1,7 @@
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(26, 18, 8, 0.5);
   backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
@@ -17,14 +17,14 @@
 }
 
 .modal-container {
-  background: #2A1E14;
+  background: var(--white);
   border-radius: 24px;
   width: 100%;
   max-width: 540px;
-  box-shadow: 0 24px 60px rgba(0,0,0,0.6);
+  box-shadow: 0 24px 60px rgba(26, 18, 8, 0.2);
   animation: slideUp 0.25s ease;
   overflow: hidden;
-  border: 1px solid #3D2E1E;
+  border: 1px solid #E8E0D0;
 }
 
 @keyframes slideUp {
@@ -37,8 +37,8 @@
   align-items: center;
   justify-content: space-between;
   padding: 1.25rem 1.75rem;
-  background: #1C1410;
-  border-bottom: 1px solid #3D2E1E;
+  background: #F0E8D8;
+  border-bottom: 1px solid #E8E0D0;
 }
 
 .modal-title {
@@ -51,7 +51,8 @@
   margin: 0;
   font-size: 1.1rem;
   font-weight: 700;
-  color: #F5EFE6;
+  color: var(--text-dark);
+  font-family: 'Syne', sans-serif;
 }
 
 .paw-icon { font-size: 1.3rem; }
@@ -60,17 +61,17 @@
   background: none;
   border: none;
   font-size: 1rem;
-  color: #9A8A78;
+  color: var(--text-gray);
   cursor: pointer;
   padding: 0.3rem 0.6rem;
   border-radius: 99px;
   transition: background 0.2s, color 0.2s;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'DM Sans', sans-serif;
 }
 
 .btn-close:hover {
-  background: #3D2E1E;
-  color: #F5EFE6;
+  background: #E8E0D0;
+  color: var(--text-dark);
 }
 
 .modal-body {
@@ -83,7 +84,7 @@
 }
 
 .error-banner {
-  background: #2A1410;
+  background: #FAE8D8;
   border-left: 4px solid var(--accent-danger);
   color: var(--accent-danger);
   border-radius: 0;
@@ -109,7 +110,7 @@
 label {
   font-size: 0.82rem;
   font-weight: 700;
-  color: #9A8A78;
+  color: var(--text-gray);
   letter-spacing: .04em;
   text-transform: uppercase;
 }
@@ -117,25 +118,24 @@ label {
 .required { color: var(--accent-danger); }
 
 input, textarea, select {
-  border: 1.5px solid #3D2E1E;
+  border: 1.5px solid #E0D0B8;
   border-radius: 12px;
   padding: 0.65rem 1rem;
   font-size: 0.9rem;
-  color: #F5EFE6;
-  background: #1C1410;
+  color: var(--text-dark);
+  background: #FAF7F2;
   transition: border-color 0.2s, box-shadow 0.2s;
   outline: none;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   width: 100%;
   box-sizing: border-box;
 }
 
 input:focus, textarea:focus, select:focus {
   border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(94, 212, 160, 0.15);
+  box-shadow: 0 0 0 3px rgba(196, 112, 58, 0.12);
 }
 
-select option { background: #2A1E14; }
 textarea { resize: vertical; }
 
 .modal-footer {
@@ -143,48 +143,48 @@ textarea { resize: vertical; }
   justify-content: flex-end;
   gap: 0.75rem;
   padding: 1rem 1.75rem;
-  border-top: 1px solid #3D2E1E;
-  background: #1C1410;
+  border-top: 1px solid #E8E0D0;
+  background: #F0E8D8;
 }
 
 .btn-cancelar {
   background: transparent;
-  color: #9A8A78;
-  border: 1.5px solid #3D2E1E;
+  color: var(--text-gray);
+  border: 1.5px solid #E0D0B8;
   border-radius: 99px;
   padding: 0.6rem 1.5rem;
   font-size: 0.9rem;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.2s;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'DM Sans', sans-serif;
 }
 
 .btn-cancelar:hover:not(:disabled) {
-  background: #3D2E1E;
-  color: #F5EFE6;
+  background: #E8E0D0;
+  color: var(--text-dark);
 }
 
 .btn-guardar {
   background: var(--primary-color);
-  color: #0D1F15;
+  color: #FAF7F2;
   border: none;
   border-radius: 99px;
   padding: 0.6rem 1.75rem;
   font-size: 0.9rem;
-  font-weight: 800;
+  font-weight: 700;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
   transition: all 0.3s;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'DM Sans', sans-serif;
 }
 
 .btn-guardar:hover:not(:disabled) {
   background: var(--primary-dark);
   transform: translateY(-2px);
-  box-shadow: 0 5px 20px rgba(94, 212, 160, 0.3);
+  box-shadow: 0 5px 20px rgba(196, 112, 58, 0.3);
 }
 
 .btn-guardar:disabled,
@@ -196,8 +196,8 @@ textarea { resize: vertical; }
 .spinner {
   width: 14px;
   height: 14px;
-  border: 2px solid rgba(13, 31, 21, 0.3);
-  border-top-color: #0D1F15;
+  border: 2px solid rgba(250, 247, 242, 0.4);
+  border-top-color: #FAF7F2;
   border-radius: 50%;
   animation: spin 0.7s linear infinite;
   display: inline-block;

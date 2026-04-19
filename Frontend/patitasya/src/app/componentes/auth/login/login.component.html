@@ -1,62 +1,49 @@
 <div class="login-container">
-  <div class="login-wrapper">
-    <div class="login-card">
-      <div class="login-header">
-        <div class="logo">
-          <div class="logo-icon">🐾</div>
-          <h1>PatitasYa</h1>
-        </div>
-        <p class="subtitle">Bienvenido de vuelta</p>
+  <div class="login-card">
+
+    <div class="login-header">
+      <div class="logo">
+        <div class="logo-icon">🐾</div>
+        <h1>PatitasYa</h1>
+      </div>
+      <p class="subtitle">Bienvenido de vuelta</p>
+    </div>
+
+    <div class="login-body">
+      <div *ngIf="errorMessage" class="alert-custom alert-error">
+        <i class="bi bi-exclamation-circle"></i>
+        {{ errorMessage }}
       </div>
 
-      <div class="login-body">
-        <div *ngIf="errorMessage" class="alert-custom alert-error">
-          <i class="bi bi-exclamation-circle"></i>
-          {{ errorMessage }}
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="input-group-custom">
+          <i class="bi bi-envelope input-icon"></i>
+          <input
+            type="email"
+            class="input-field"
+            formControlName="email"
+            placeholder="Correo electrónico">
         </div>
 
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-          <div class="input-group-custom">
-            <i class="bi bi-envelope input-icon"></i>
-            <input 
-              type="email" 
-              class="input-field" 
-              formControlName="email"
-              placeholder="Correo electrónico">
-          </div>
-
-          <div class="input-group-custom">
-            <i class="bi bi-lock input-icon"></i>
-            <input 
-              type="password" 
-              class="input-field" 
-              formControlName="password"
-              placeholder="Contraseña">
-          </div>
-
-          <button type="submit" class="btn-login" [disabled]="loginForm.invalid">
-            <span>Iniciar Sesión</span>
-            <i class="bi bi-arrow-right"></i>
-          </button>
-        </form>
-
-        <div class="login-footer">
-          <p>¿No tenés cuenta? <a routerLink="/registro">Crear cuenta</a></p>
+        <div class="input-group-custom">
+          <i class="bi bi-lock input-icon"></i>
+          <input
+            type="password"
+            class="input-field"
+            formControlName="password"
+            placeholder="Contraseña">
         </div>
+
+        <button type="submit" class="btn-login" [disabled]="loginForm.invalid || loading">
+          <span>{{ loading ? 'Ingresando...' : 'Iniciar Sesión' }}</span>
+          <i class="bi bi-arrow-right"></i>
+        </button>
+      </form>
+
+      <div class="login-footer">
+        <p>¿No tenés cuenta? <a routerLink="/registro">Crear cuenta</a></p>
       </div>
     </div>
 
-    <div class="login-decoration">
-      <div class="decoration-content">
-        <div class="pet-icons">
-          <span class="pet-icon">🐕</span>
-          <span class="pet-icon">🐈</span>
-          <span class="pet-icon">🐶</span>
-          <span class="pet-icon">🐱</span>
-        </div>
-        <h2>Ayudamos a encontrar</h2>
-        <p>Miles de mascotas ya encontraron su hogar gracias a nuestra comunidad</p>
-      </div>
-    </div>
   </div>
 </div>
