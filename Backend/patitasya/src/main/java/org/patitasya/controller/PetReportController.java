@@ -80,4 +80,18 @@ public class PetReportController {
         return ResponseEntity.ok(petReportService.getReportById(id));
     }
 
+
+    @PutMapping("/{id}")
+    public ResponseEntity<PetReportResponseDTO> actualizarReporte(
+            @PathVariable Long id,
+            @RequestBody @Valid PetReportRequestDTO dto){
+        return ResponseEntity.ok(petReportService.updateReport(id, dto));
+    }
+
+    @PatchMapping("/{id}/estado")
+    public ResponseEntity<PetReportResponseDTO> actualizarEstado(
+            @PathVariable Long id,
+            @RequestParam PostStatus estado){
+        return ResponseEntity.ok(petReportService.updateReportStatus(id, estado));
+    }
 }

@@ -16,6 +16,8 @@ public interface PetReportService {
     List<PetReportResponseDTO> getReportsByType(PostType tipo);
     List<PetReportResponseDTO> getReportsByStatus(PostStatus estado);
     List<PetReportResponseDTO> getReportsByUser(Long usuarioId);
+    PetReportResponseDTO updateReport(Long id, PetReportRequestDTO dto);
+    PetReportResponseDTO updateReportStatus(Long id, PostStatus status);
     void deleteReport(Long reportId);
 
     String uploadImage(Long reportId, MultipartFile file);

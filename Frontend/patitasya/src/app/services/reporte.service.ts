@@ -50,4 +50,8 @@ export class ReporteService {
     formData.append('file', file);
     return this.http.post<string>(`${this.apiUrl}/report/${reportId}/upload`, formData);
   }
+
+  updateReport(id: number, reporte: PetReportRequest): Observable<PetReportResponse> {
+  return this.http.put<PetReportResponse>(`${this.apiUrl}/report/${id}`, reporte);
+}
 }

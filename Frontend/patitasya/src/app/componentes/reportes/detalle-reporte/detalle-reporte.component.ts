@@ -4,11 +4,12 @@ import { PostType } from '../../../models/enums';
 import { ActivatedRoute, Route, Router, RouterLink } from '@angular/router';
 import { ReporteService } from '../../../services/reporte.service';
 import { CommonModule } from '@angular/common';
+import { EditarReporteModalComponent } from '../editar-reporte-modal/editar-reporte-modal.component';
 
 @Component({
   selector: 'app-detalle-reporte',
   standalone: true,
-  imports: [CommonModule,RouterLink],
+  imports: [CommonModule,RouterLink, EditarReporteModalComponent],
   templateUrl: './detalle-reporte.component.html',
   styleUrl: './detalle-reporte.component.css'
 })
@@ -19,6 +20,8 @@ export class DetalleReporteComponent {
   errorMessage: string = '';
   tipoLabels = PostTypeLabels;
   PostType = PostType;
+
+  mostrarModalEditar = false;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -114,6 +117,21 @@ contactar(): void {
   if (this.reporte?.usuarioNombre) {
     alert(`Para contactar al usuario "${this.reporte.usuarioNombre}" implementá aquí el sistema de mensajería.`);
   }
+
+  
+}
+
+abrirModalEditar(): void {
+  this.mostrarModalEditar = true;
+}
+
+onModalCerrado(): void {
+  this.mostrarModalEditar = false;
+}
+
+onReporteGuardado(reporteActualizado: PetReportResponse): void {
+  this.reporte = reporteActualizado;
+  this.mostrarModalEditar = false;
 }
 }
 

@@ -86,6 +86,9 @@
           <button class="btn-compartir" (click)="compartir()">
             <i class="bi bi-share-fill"></i> Compartir
           </button>
+            <button class="btn-editar" (click)="abrirModalEditar()">
+          <i class="bi bi-pencil-fill"></i> Editar
+          </button>
           <button class="btn-contactar" (click)="contactar()">
             <i class="bi bi-envelope-fill"></i> Contactar
           </button>
@@ -93,4 +96,14 @@
       </div>
     </div>
   </div>
+   <!-- Modal editar -->
+  @if (mostrarModalEditar && reporte) {
+    <app-editar-reporte-modal
+      [reporte]="reporte"
+      (cerrar)="onModalCerrado()"
+      (guardado)="onReporteGuardado($event)"
+    />
+  }
+
+  
 </div>

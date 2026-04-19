@@ -99,6 +99,39 @@ public class PetReportServiceImpl implements PetReportService {
     }
 
     @Override
+    public PetReportResponseDTO updateReport(Long id, PetReportRequestDTO dto) {
+        PetReport report = petReportRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("Reporte no encontrado"));
+
+        Usuario usuario = SecurityUtils.getCurrentUser();
+        validarPermiso(report, usuario);
+
+        // Actualizar campos
+        report.setTitulo(dto.getTitulo());
+        report.setDescripcion(dto.getDescripcion());
+        report.setTipo(dto.getTipo());
+        report.setUbicacion(dto.getUbicacion());
+        report.setLatitud(dto.getLatitud());
+        report.setLongitud(dto.getLongitud());
+
+        PetReport actualizado = petReportRepository.save(report);
+        return mapToResponse(actualizado);
+    }
+
+    @Override
+    public PetReportResponseDTO updateReportStatus(Long id, PostStatus status) {
+        PetReport report = petReportRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Reporte no encontrado"));
+
+        Usuario usuario = SecurityUtils.getCurrentUser();
+        validarPermiso(report, usuario);
+
+        report.setEstado(status);
+        PetReport updated = petReportRepository.save(report);
+        return mapToResponse(updated);
+    }
+
+    @Override
     public void deleteReport(Long reportId) {
         PetReport report = petReportRepository.findById(reportId)
                 .orElseThrow(() -> new RuntimeException("Reporte no encontrado"));

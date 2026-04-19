@@ -24,6 +24,7 @@ public class PetReportResponseDTO {
     private LocalDateTime createdAt;
 
     private String usuarioNombre;
+    private Long usuarioId;
 
     private List<String> fotos;
 }
