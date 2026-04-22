@@ -1,19 +1,19 @@
 <nav class="navbar navbar-custom sticky-top">
   <div class="container">
-    <!-- Logo y marca - izquierda -->
     <a class="navbar-brand" routerLink="/reportes">
       <span class="logo-icon">🐾</span>
       <span class="brand-text">PatitasYa</span>
     </a>
 
-    <!-- Perfil de usuario y menú hamburguesa - derecha -->
+    <!-- Botón estadísticas desktop -->
     <div class="navbar-right">
-      <!-- Perfil de usuario (visible siempre en desktop) -->
+      <a routerLink="/estadisticas" routerLinkActive="active" class="btn-estadisticas desktop-only">
+        <i class="bi bi-pie-chart-fill"></i> Estadísticas
+      </a>
+
       <div class="user-profile desktop-only">
         <div class="user-info">
-          <div class="user-avatar">
-            {{ getRoleIcon() }}
-          </div>
+          <div class="user-avatar">{{ getRoleIcon() }}</div>
           <div class="user-details">
             <div class="user-name">{{ userName }}</div>
             <div class="user-role">
@@ -28,19 +28,14 @@
         </button>
       </div>
 
-      <!-- Botón hamburguesa (visible solo en mobile) -->
       <button class="navbar-toggler" type="button" (click)="toggleMenu()">
         <span class="navbar-toggler-icon"></span>
       </button>
     </div>
 
-    <!-- Menú mobile (se despliega cuando se toca el botón) -->
     <div class="navbar-menu" [class.show]="menuOpen">
-      <!-- Perfil de usuario en mobile -->
       <div class="user-profile-mobile">
-        <div class="user-avatar">
-          {{ getRoleIcon() }}
-        </div>
+        <div class="user-avatar">{{ getRoleIcon() }}</div>
         <div class="user-info-mobile">
           <div class="user-name">{{ userName }}</div>
           <div class="user-role">
@@ -54,11 +49,15 @@
         </button>
       </div>
 
-      <!-- Menú de navegación mobile -->
       <ul class="navbar-nav-mobile">
         <li class="nav-item">
           <a class="nav-link" routerLink="/reportes" routerLinkActive="active" (click)="menuOpen=false">
             <i class="bi bi-grid-3x3-gap-fill"></i> Reportes
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/estadisticas" routerLinkActive="active" (click)="menuOpen=false">
+            <i class="bi bi-pie-chart-fill"></i> Estadísticas
           </a>
         </li>
         <li class="nav-item" *ngIf="isAdmin">

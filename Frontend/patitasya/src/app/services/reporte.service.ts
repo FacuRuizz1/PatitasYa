@@ -3,6 +3,7 @@ import { environment } from '../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { PetReportRequest, PetReportResponse } from '../models/Reporte';
+import { Estadisticas } from '../models/Estadisticas';
 
 @Injectable({
   providedIn: 'root'
@@ -58,4 +59,8 @@ export class ReporteService {
   deleteReport(id: number): Observable<void> {
   return this.http.delete<void>(`${this.apiUrl}/report/${id}`);
   }
+
+  getEstadisticas(): Observable<Estadisticas> {
+  return this.http.get<Estadisticas>(`${this.apiUrl}/report/estadisticas`);
+}
 }

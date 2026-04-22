@@ -17,4 +17,6 @@ public interface PetReportRepository extends JpaRepository<PetReport,Long> {
     List<PetReport> findByUsuarioId(Long usuarioId);
 
     Optional<PetReport> findById(Long id);
+
+    long countByTipo(PostType tipo);
 }

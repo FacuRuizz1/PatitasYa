@@ -16,7 +16,6 @@
   padding: 0 20px;
 }
 
-/* Logo */
 .navbar-brand {
   display: flex;
   align-items: center;
@@ -44,14 +43,42 @@
   background-clip: text;
 }
 
-/* Lado derecho del navbar */
 .navbar-right {
   display: flex;
   align-items: center;
   gap: 15px;
 }
 
-/* Perfil de usuario desktop */
+.btn-estadisticas {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(255, 255, 255, 0.15);
+  color: white !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  padding: 7px 18px;
+  border-radius: 99px;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: 'DM Sans', sans-serif;
+  text-decoration: none;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.btn-estadisticas:hover {
+  background: rgba(255, 255, 255, 0.28);
+  border-color: rgba(255, 255, 255, 0.7);
+  color: white !important;
+  transform: translateY(-1px);
+}
+
+.btn-estadisticas.active {
+  background: white;
+  color: var(--primary-color) !important;
+  border-color: white;
+}
+
 .user-profile {
   display: flex;
   align-items: center;
@@ -127,7 +154,6 @@
   transform: scale(1.05);
 }
 
-/* Botón hamburguesa */
 .navbar-toggler {
   display: none;
   background: rgba(255,255,255,0.2);
@@ -145,7 +171,6 @@
   background-position: center;
 }
 
-/* Menú mobile (oculto por defecto) */
 .navbar-menu {
   display: none;
   position: absolute;
@@ -163,7 +188,6 @@
   display: flex;
 }
 
-/* Perfil mobile */
 .user-profile-mobile {
   display: flex;
   align-items: center;
@@ -195,7 +219,6 @@
   gap: 5px;
 }
 
-/* Navegación mobile */
 .navbar-nav-mobile {
   list-style: none;
   margin: 0;
@@ -223,28 +246,13 @@
   color: var(--primary-color);
 }
 
-/* Desktop styles */
 @media (min-width: 769px) {
-  .desktop-only {
-    display: flex !important;
-  }
-  
-  .navbar-toggler {
-    display: none !important;
-  }
+  .desktop-only { display: flex !important; }
+  .navbar-toggler { display: none !important; }
 }
 
-/* Mobile styles */
 @media (max-width: 768px) {
-  .desktop-only {
-    display: none !important;
-  }
-  
-  .navbar-toggler {
-    display: flex !important;
-  }
-  
-  .navbar-right {
-    gap: 10px;
-  }
+  .desktop-only { display: none !important; }
+  .navbar-toggler { display: flex !important; }
+  .navbar-right { gap: 10px; }
 }

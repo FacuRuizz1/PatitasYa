@@ -6,10 +6,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.SchemaProperty;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.patitasya.dto.EstadisticasDTO;
 import org.patitasya.dto.PetReportRequestDTO;
 import org.patitasya.dto.PetReportResponseDTO;
 import org.patitasya.enums.PostStatus;
 import org.patitasya.enums.PostType;
+import org.patitasya.repository.PetReportRepository;
 import org.patitasya.service.PetReportService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +26,7 @@ import java.util.List;
 public class PetReportController {
 
     private final PetReportService petReportService;
+    private final PetReportRepository petReportRepository;
 
     @PostMapping("/crear")
     public ResponseEntity<PetReportResponseDTO> registrarReporte(@RequestBody @Valid PetReportRequestDTO dto){
@@ -99,5 +102,22 @@ public class PetReportController {
     public ResponseEntity<Void> eliminarReporte(@PathVariable Long id) {
         petReportService.deleteReport(id);
         return ResponseEntity.noContent().build();
+    }
+
+
+    @GetMapping("/estadisticas")
+    public ResponseEntity<EstadisticasDTO> obtenerEstadisticas() {
+        long perdidas    = petReportRepository.countByTipo(PostType.PERDIDA);
+        long encontradas = petReportRepository.countByTipo(PostType.ENCONTRADA);
+        long adopciones  = petReportRepository.countByTipo(PostType.ADOPCION);
+
+        EstadisticasDTO stats = EstadisticasDTO.builder()
+                .perdidas(perdidas)
+                .encontradas(encontradas)
+                .adopciones(adopciones)
+                .total(perdidas + encontradas + adopciones)
+                .build();
+
+        return ResponseEntity.ok(stats);
     }
 }

@@ -1,0 +1,41 @@
+<div class="grafico-card">
+  <div class="grafico-header">
+    <h3>📊 Estadísticas de reportes</h3>
+    <p>Distribución por tipo de mascota</p>
+  </div>
+
+  <div *ngIf="loading" class="grafico-loading">
+    <div class="loader"></div>
+  </div>
+
+  <div *ngIf="!loading && estadisticas">
+
+    <div class="stats-row">
+      <div class="stat-item perdida">
+        <span class="stat-num">{{ estadisticas.perdidas }}</span>
+        <span class="stat-label">Perdidas</span>
+      </div>
+      <div class="stat-item encontrada">
+        <span class="stat-num">{{ estadisticas.encontradas }}</span>
+        <span class="stat-label">Encontradas</span>
+      </div>
+      <div class="stat-item adopcion">
+        <span class="stat-num">{{ estadisticas.adopciones }}</span>
+        <span class="stat-label">Adopción</span>
+      </div>
+    </div>
+
+    <google-chart
+      [type]="chartType"
+      [data]="chartData"
+      [columns]="chartColumns"
+      [options]="chartOptions"
+      style="width: 100%; height: 300px;">
+    </google-chart>
+
+    <div class="total-badge">
+      Total: <strong>{{ estadisticas.total }}</strong> reportes
+    </div>
+
+  </div>
+</div>
