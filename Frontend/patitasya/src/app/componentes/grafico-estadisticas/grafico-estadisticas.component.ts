@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { Estadisticas } from '../../models/Estadisticas';
 import { ReporteService } from '../../services/reporte.service';
 import { GoogleChartsModule, ChartType } from 'angular-google-charts';
@@ -8,6 +8,7 @@ import { GoogleChartsModule, ChartType } from 'angular-google-charts';
   selector: 'app-grafico-estadisticas',
   standalone: true,
   imports: [CommonModule, GoogleChartsModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './grafico-estadisticas.component.html',
   styleUrl: './grafico-estadisticas.component.css'
 })

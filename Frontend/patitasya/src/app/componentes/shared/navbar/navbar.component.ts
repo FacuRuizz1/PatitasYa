@@ -41,13 +41,9 @@ export class NavbarComponent {
     this.menuOpen = !this.menuOpen;
   }
 
-  getRoleIcon(): string {
-    if (this.isAdmin) {
-      return '👑';
-    }
-    return '🐾';
+   getRoleIcon(): string {
+    return '🐾';  
   }
-
   getRoleBadgeClass(): string {
     if (this.isAdmin) {
       return 'badge-admin';
