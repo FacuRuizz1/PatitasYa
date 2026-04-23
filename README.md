@@ -98,9 +98,6 @@ spring.datasource.username=postgres
 spring.datasource.password=tu_password
 spring.jpa.hibernate.ddl-auto=update
 
-# JWT
-jwt.secret=tu_clave_secreta
-jwt.expiration=86400000
 
 # Cloudinary
 cloudinary.cloud_name=tu_cloud_name
