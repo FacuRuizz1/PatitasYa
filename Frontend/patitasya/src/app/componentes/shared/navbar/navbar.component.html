@@ -7,7 +7,7 @@
 
     <!-- Botón estadísticas desktop -->
     <div class="navbar-right">
-      <a routerLink="/estadisticas" routerLinkActive="active" class="btn-estadisticas desktop-only">
+      <a *ngIf="isAdmin" routerLink="/estadisticas" routerLinkActive="active" class="btn-estadisticas desktop-only">
         <i class="bi bi-pie-chart-fill"></i> Estadísticas
       </a>
 
@@ -55,7 +55,7 @@
             <i class="bi bi-grid-3x3-gap-fill"></i> Reportes
           </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="isAdmin">
           <a class="nav-link" routerLink="/estadisticas" routerLinkActive="active" (click)="menuOpen=false">
             <i class="bi bi-pie-chart-fill"></i> Estadísticas
           </a>

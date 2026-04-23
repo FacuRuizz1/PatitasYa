@@ -6,6 +6,7 @@ import { authGuard } from './guards/auth.guard';
 import { DetalleReporteComponent } from './componentes/reportes/detalle-reporte/detalle-reporte.component';
 import { CrearReporteComponent } from './componentes/reportes/crear-reporte/crear-reporte.component';
 import { GraficoEstadisticasComponent } from './componentes/grafico-estadisticas/grafico-estadisticas.component';
+import { adminGuard } from './guards/admin.guard';
 
 export const routes: Routes = [
     {path: 'login', component: LoginComponent},
@@ -13,6 +14,6 @@ export const routes: Routes = [
     {path: 'reportes', component: ListarReportesComponent, canActivate: [authGuard] },
     {path: 'reporte/:id', component: DetalleReporteComponent, canActivate: [authGuard]},
     {path: 'crear-reporte', component: CrearReporteComponent, canActivate: [authGuard]},
-    { path: 'estadisticas', component: GraficoEstadisticasComponent, canActivate: [authGuard] },
+    { path: 'estadisticas', component: GraficoEstadisticasComponent, canActivate: [authGuard,  adminGuard] },
     {path: '', redirectTo: "/login", pathMatch: 'full'}
 ];
