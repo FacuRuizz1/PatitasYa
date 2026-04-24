@@ -26,5 +26,7 @@ public class PetReportResponseDTO {
     private String usuarioNombre;
     private Long usuarioId;
 
+    private String usuarioEmail;
+
     private List<String> fotos;
 }

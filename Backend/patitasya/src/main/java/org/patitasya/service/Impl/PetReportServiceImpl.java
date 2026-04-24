@@ -160,6 +160,7 @@ public class PetReportServiceImpl implements PetReportService {
                 .ubicacion(report.getUbicacion())
                 .createdAt(report.getCreatedAt())
                 .usuarioNombre(report.getUsuario().getNombre())
+                .usuarioEmail(report.getUsuario().getEmail())
                 .fotos(fotos)
                 .build();
     }

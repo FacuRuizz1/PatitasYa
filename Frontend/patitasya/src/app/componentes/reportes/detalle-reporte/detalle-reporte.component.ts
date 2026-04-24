@@ -117,23 +117,47 @@ fotoSiguiente(): void {
 }
 
   compartir(): void {
-    if (navigator.share) {
-      navigator.share({
-        title: this.reporte?.titulo,
-        text: this.reporte?.descripcion,
-        url: window.location.href
-      });
-    } else {
-      navigator.clipboard.writeText(window.location.href);
-      alert('¡Enlace copiado al portapapeles!');
-    }
+  if (navigator.share) {
+    navigator.share({
+      title: this.reporte?.titulo,
+      text: this.reporte?.descripcion,
+      url: window.location.href
+    });
+  } else {
+    navigator.clipboard.writeText(window.location.href);
+    Swal.fire({
+      title: '¡Enlace copiado!',
+      icon: 'success',
+      background: '#2A1E14',
+      color: '#F5EFE6',
+      confirmButtonColor: '#5ED4A0',
+      timer: 1500,
+      showConfirmButton: false,
+    });
+  }
+}
+
+ contactar(): void {
+  const email = this.reporte?.usuarioEmail;
+  if (!email) {
+    Swal.fire({
+      title: 'Sin contacto disponible',
+      text: 'Este usuario no tiene email registrado.',
+      icon: 'info',
+      background: '#2A1E14',
+      color: '#F5EFE6',
+      confirmButtonColor: '#5ED4A0',
+    });
+    return;
   }
 
-  contactar(): void {
-    if (this.reporte?.usuarioNombre) {
-      alert(`Para contactar al usuario "${this.reporte.usuarioNombre}" implementá aquí el sistema de mensajería.`);
-    }
-  }
+  const asunto = encodeURIComponent(`Consulta sobre: ${this.reporte?.titulo}`);
+  const cuerpo = encodeURIComponent(
+    `Hola ${this.reporte?.usuarioNombre}, vi tu reporte "${this.reporte?.titulo}" en Patitasya y me gustaría contactarme.`
+  );
+
+  window.open(`mailto:${email}?subject=${asunto}&body=${cuerpo}`);
+}
 
   abrirModalEditar(): void {
     this.mostrarModalEditar = true;

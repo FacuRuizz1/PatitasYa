@@ -3,4 +3,5 @@ export interface Estadisticas {
   encontradas: number;
   adopciones: number;
   total: number;
+  periodo: string;
 }

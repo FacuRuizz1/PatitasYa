@@ -35,6 +35,7 @@ export interface PetReportResponse {
   longitud?: number;
   createdAt: Date;
   usuarioNombre: string;
+  usuarioEmail: string;
   fotos: string[];
 }
 
