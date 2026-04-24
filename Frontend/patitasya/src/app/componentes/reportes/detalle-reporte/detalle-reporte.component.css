@@ -286,3 +286,106 @@
   .detalle-acciones { flex-direction: column; }
   .galeria { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
 }
+
+
+/* ===== MODAL LIGHTBOX FOTOS ===== */
+.foto-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.88);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.2s ease;
+}
+
+.foto-modal-content {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 90vw;
+  max-height: 90vh;
+}
+
+.foto-modal-img {
+  max-width: 85vw;
+  max-height: 85vh;
+  object-fit: contain;
+  border-radius: 10px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+  animation: zoomIn 0.2s ease;
+}
+
+.foto-modal-cerrar {
+  position: fixed;
+  top: 1.2rem;
+  right: 1.5rem;
+  background: rgba(255,255,255,0.15);
+  border: none;
+  color: white;
+  font-size: 1.4rem;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  z-index: 10001;
+}
+.foto-modal-cerrar:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+.foto-modal-contador {
+  position: fixed;
+  top: 1.4rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  font-size: 0.95rem;
+  background: rgba(0,0,0,0.45);
+  padding: 4px 14px;
+  border-radius: 20px;
+  z-index: 10001;
+}
+
+.foto-modal-nav {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.15);
+  border: none;
+  color: white;
+  font-size: 1.8rem;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, opacity 0.2s;
+  z-index: 10001;
+}
+.foto-modal-nav:hover:not(:disabled) {
+  background: rgba(255,255,255,0.3);
+}
+.foto-modal-nav:disabled {
+  opacity: 0.2;
+  cursor: default;
+}
+.foto-modal-prev { left: 1.5rem; }
+.foto-modal-next { right: 1.5rem; }
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes zoomIn {
+  from { transform: scale(0.93); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}

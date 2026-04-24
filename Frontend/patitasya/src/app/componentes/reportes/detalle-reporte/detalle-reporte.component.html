@@ -36,7 +36,7 @@
       <!-- Cuerpo del detalle -->
       <div class="detalle-body">
         <h1 class="detalle-titulo">{{ reporte.titulo }}</h1>
-        
+
         <div class="detalle-meta">
           <div class="meta-item">
             <i class="bi bi-person-circle"></i>
@@ -69,7 +69,7 @@
         <div *ngIf="reporte.fotos && reporte.fotos.length > 0" class="detalle-seccion">
           <h3><i class="bi bi-images"></i> Fotos ({{ reporte.fotos.length }})</h3>
           <div class="galeria">
-            <div *ngFor="let foto of reporte.fotos" class="galeria-item" (click)="abrirModal(foto)">
+            <div *ngFor="let foto of reporte.fotos; let i = index" class="galeria-item" (click)="abrirModal(i)">
               <img [src]="foto" alt="Foto de mascota" class="galeria-img">
             </div>
           </div>
@@ -86,11 +86,11 @@
           <button class="btn-compartir" (click)="compartir()">
             <i class="bi bi-share-fill"></i> Compartir
           </button>
-            <button class="btn-editar" (click)="abrirModalEditar()">
-          <i class="bi bi-pencil-fill"></i> Editar
+          <button class="btn-editar" (click)="abrirModalEditar()">
+            <i class="bi bi-pencil-fill"></i> Editar
           </button>
-           <button class="btn-eliminar" (click)="eliminarReporte()">
-          <i class="bi bi-trash-fill"></i> Eliminar
+          <button class="btn-eliminar" (click)="eliminarReporte()">
+            <i class="bi bi-trash-fill"></i> Eliminar
           </button>
           <button class="btn-contactar" (click)="contactar()">
             <i class="bi bi-envelope-fill"></i> Contactar
@@ -99,7 +99,8 @@
       </div>
     </div>
   </div>
-   <!-- Modal editar -->
+
+  <!-- Modal editar -->
   @if (mostrarModalEditar && reporte) {
     <app-editar-reporte-modal
       [reporte]="reporte"
@@ -108,5 +109,45 @@
     />
   }
 
-  
+ <!-- Modal Lightbox de Fotos -->
+@if (modalFotoVisible && reporte && reporte.fotos && reporte.fotos.length) {
+  <div class="foto-modal-overlay" (click)="cerrarModalFoto()">
+    <div class="foto-modal-content" (click)="$event.stopPropagation()">
+
+      <!-- Botón cerrar -->
+      <button class="foto-modal-cerrar" (click)="cerrarModalFoto()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+
+      <!-- Contador -->
+      <div class="foto-modal-contador">
+        {{ fotoActualIndex + 1 }} / {{ reporte.fotos.length }}
+      </div>
+
+      <!-- Flecha izquierda -->
+      <button
+        class="foto-modal-nav foto-modal-prev"
+        (click)="fotoAnterior()"
+        [disabled]="fotoActualIndex === 0">
+        <i class="bi bi-chevron-left"></i>
+      </button>
+
+      <!-- Imagen -->
+      <img
+        [src]="reporte.fotos[fotoActualIndex]"
+        alt="Foto {{ fotoActualIndex + 1 }}"
+        class="foto-modal-img">
+
+      <!-- Flecha derecha -->
+      <button
+        class="foto-modal-nav foto-modal-next"
+        (click)="fotoSiguiente()"
+        [disabled]="fotoActualIndex === reporte.fotos.length - 1">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+
+    </div>
+  </div>
+}
+
 </div>

@@ -23,6 +23,9 @@ export class DetalleReporteComponent implements OnInit {
   PostType = PostType;
   mostrarModalEditar = false;
 
+  modalFotoVisible = false;
+  fotoActualIndex = 0;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -91,9 +94,27 @@ export class DetalleReporteComponent implements OnInit {
     }
   }
 
-  abrirModal(foto: string): void {
-    window.open(foto, '_blank');
+  abrirModal(index: number): void {
+  this.fotoActualIndex = index;
+  this.modalFotoVisible = true;
   }
+
+  cerrarModalFoto(): void {
+  this.modalFotoVisible = false;
+  }
+
+  fotoAnterior(): void {
+  if (this.fotoActualIndex > 0) {
+    this.fotoActualIndex--;
+  }
+}
+
+fotoSiguiente(): void {
+  if (!this.reporte?.fotos) return;
+  if (this.fotoActualIndex < this.reporte.fotos.length - 1) {
+    this.fotoActualIndex++;
+  }
+}
 
   compartir(): void {
     if (navigator.share) {
