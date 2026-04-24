@@ -14,4 +14,7 @@ public class EstadisticasDTO {
     private long encontradas;
     private long adopciones;
     private long total;
+    private String periodo;
+    private long perdidasResueltas;
+    private double tasaResolucion;
 }

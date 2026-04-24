@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -106,18 +107,48 @@ public class PetReportController {
 
 
     @GetMapping("/estadisticas")
-    public ResponseEntity<EstadisticasDTO> obtenerEstadisticas() {
-        long perdidas    = petReportRepository.countByTipo(PostType.PERDIDA);
-        long encontradas = petReportRepository.countByTipo(PostType.ENCONTRADA);
-        long adopciones  = petReportRepository.countByTipo(PostType.ADOPCION);
+    public ResponseEntity<EstadisticasDTO> obtenerEstadisticas(
+            @RequestParam(defaultValue = "todo") String periodo) {
+
+        LocalDateTime desde = calcularDesde(periodo);
+
+        long perdidas, encontradas, adopciones, perdidasResueltas;
+
+        if (desde == null) {
+            perdidas          = petReportRepository.countByTipo(PostType.PERDIDA);
+            encontradas       = petReportRepository.countByTipo(PostType.ENCONTRADA);
+            adopciones        = petReportRepository.countByTipo(PostType.ADOPCION);
+            perdidasResueltas = petReportRepository.countByTipoAndEstado(PostType.PERDIDA, PostStatus.RESUELTA);
+        } else {
+            perdidas          = petReportRepository.countByTipoAndCreatedAtAfter(PostType.PERDIDA, desde);
+            encontradas       = petReportRepository.countByTipoAndCreatedAtAfter(PostType.ENCONTRADA, desde);
+            adopciones        = petReportRepository.countByTipoAndCreatedAtAfter(PostType.ADOPCION, desde);
+            perdidasResueltas = petReportRepository.countByTipoAndEstadoAndCreatedAtAfter(PostType.PERDIDA, PostStatus.RESUELTA, desde);
+        }
+
+        double tasaResolucion = perdidas > 0
+                ? Math.round((perdidasResueltas * 100.0 / perdidas) * 10.0) / 10.0
+                : 0;
 
         EstadisticasDTO stats = EstadisticasDTO.builder()
                 .perdidas(perdidas)
                 .encontradas(encontradas)
                 .adopciones(adopciones)
                 .total(perdidas + encontradas + adopciones)
+                .perdidasResueltas(perdidasResueltas)
+                .tasaResolucion(tasaResolucion)
+                .periodo(periodo)
                 .build();
 
         return ResponseEntity.ok(stats);
+    }
+
+    private LocalDateTime calcularDesde(String periodo) {
+        return switch (periodo) {
+            case "semana" -> LocalDateTime.now().minusWeeks(1);
+            case "mes"    -> LocalDateTime.now().minusMonths(1);
+            case "anio"   -> LocalDateTime.now().minusYears(1);
+            default       -> null; // "todo"
+        };
     }
 }

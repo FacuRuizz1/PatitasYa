@@ -16,6 +16,14 @@ export class GraficoEstadisticasComponent implements OnInit {
 
   estadisticas: Estadisticas | null = null;
   loading = true;
+  periodoSeleccionado = 'todo';
+
+   periodos = [
+    { valor: 'semana', label: 'Última semana' },
+    { valor: 'mes',    label: 'Último mes' },
+    { valor: 'anio',   label: 'Último año' },
+    { valor: 'todo',   label: 'Todo' },
+  ];
 
   chartType = ChartType.PieChart;
   chartData: [string, number][] = [];
@@ -34,8 +42,16 @@ export class GraficoEstadisticasComponent implements OnInit {
     fontName: 'DM Sans',
   };
 
+   constructor(private reporteService: ReporteService) {}
+
    ngOnInit(): void {
-    this.reporteService.getEstadisticas().subscribe({
+    this.cargarEstadisticas();
+  }
+
+
+   cargarEstadisticas(): void {
+    this.loading = true;
+    this.reporteService.getEstadisticas(this.periodoSeleccionado).subscribe({
       next: (data) => {
         this.estadisticas = data;
         this.chartData = [
@@ -49,6 +65,10 @@ export class GraficoEstadisticasComponent implements OnInit {
     });
   }
 
-   constructor(private reporteService: ReporteService) {}
+  onPeriodoChange(periodo: string): void {
+    this.periodoSeleccionado = periodo;
+    this.cargarEstadisticas();
+  }
+  
 
 }

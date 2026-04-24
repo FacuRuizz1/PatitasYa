@@ -389,3 +389,23 @@
   from { transform: scale(0.93); opacity: 0; }
   to   { transform: scale(1);    opacity: 1; }
 }
+
+.btn-resolver {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 25px;
+  border: none;
+  background: linear-gradient(135deg, #5ed4a0, #2e7d32);
+  color: white;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.btn-resolver:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}

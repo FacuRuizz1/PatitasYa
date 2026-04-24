@@ -4,4 +4,6 @@ export interface Estadisticas {
   adopciones: number;
   total: number;
   periodo: string;
+  perdidasResueltas: number; 
+  tasaResolucion: number;   
 }

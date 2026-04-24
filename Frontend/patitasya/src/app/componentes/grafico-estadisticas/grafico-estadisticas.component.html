@@ -4,6 +4,16 @@
     <p>Distribución por tipo de mascota</p>
   </div>
 
+  <div class="periodo-filtro">
+    <button
+      *ngFor="let p of periodos"
+      class="btn-periodo"
+      [class.activo]="periodoSeleccionado === p.valor"
+      (click)="onPeriodoChange(p.valor)">
+      {{ p.label }}
+    </button>
+  </div>
+
   <div *ngIf="loading" class="grafico-loading">
     <div class="loader"></div>
   </div>
@@ -35,6 +45,20 @@
 
     <div class="total-badge">
       Total: <strong>{{ estadisticas.total }}</strong> reportes
+    </div>
+
+     <div class="resolucion-card">
+      <div class="resolucion-info">
+        <span class="resolucion-titulo">🎯 Tasa de resolución</span>
+        <span class="resolucion-sub">Mascotas perdidas que fueron resueltas</span>
+      </div>
+      <div class="resolucion-derecha">
+        <span class="resolucion-num">{{ estadisticas.tasaResolucion }}%</span>
+        <span class="resolucion-detalle">{{ estadisticas.perdidasResueltas }} de {{ estadisticas.perdidas }}</span>
+      </div>
+      <div class="resolucion-barra-bg">
+        <div class="resolucion-barra-fill" [style.width]="estadisticas.tasaResolucion + '%'"></div>
+      </div>
     </div>
 
   </div>

@@ -95,6 +95,13 @@
           <button class="btn-contactar" (click)="contactar()">
             <i class="bi bi-envelope-fill"></i> Contactar
           </button>
+
+           <button
+          *ngIf="reporte.tipo === PostType.PERDIDA && reporte.estado === PostStatus.ACTIVA"
+          class="btn-resolver"
+          (click)="marcarComoResuelta()">
+          <i class="bi bi-check-circle-fill"></i> Marcar como resuelta
+         </button>
         </div>
       </div>
     </div>

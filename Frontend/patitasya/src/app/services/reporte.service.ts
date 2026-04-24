@@ -60,7 +60,13 @@ export class ReporteService {
   return this.http.delete<void>(`${this.apiUrl}/report/${id}`);
   }
 
-  getEstadisticas(): Observable<Estadisticas> {
-  return this.http.get<Estadisticas>(`${this.apiUrl}/report/estadisticas`);
+ getEstadisticas(periodo: string = 'todo'): Observable<Estadisticas> {
+  return this.http.get<Estadisticas>(`${this.apiUrl}/report/estadisticas?periodo=${periodo}`);
+  }
+
+  updateReportStatus(id: number, estado: string): Observable<PetReportResponse> {
+  return this.http.patch<PetReportResponse>(
+    `${this.apiUrl}/report/${id}/estado?estado=${estado}`, {}
+  );
 }
 }

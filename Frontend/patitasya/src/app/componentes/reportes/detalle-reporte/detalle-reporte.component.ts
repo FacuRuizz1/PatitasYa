@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PetReportResponse, PostTypeLabels } from '../../../models/Reporte';
-import { PostType } from '../../../models/enums';
+import { PostStatus, PostType } from '../../../models/enums';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ReporteService } from '../../../services/reporte.service';
 import { CommonModule } from '@angular/common';
@@ -21,6 +21,7 @@ export class DetalleReporteComponent implements OnInit {
   errorMessage: string = '';
   tipoLabels = PostTypeLabels;
   PostType = PostType;
+  PostStatus = PostStatus;
   mostrarModalEditar = false;
 
   modalFotoVisible = false;
@@ -217,4 +218,51 @@ fotoSiguiente(): void {
       }
     });
   }
+
+  marcarComoResuelta(): void {
+  if (!this.reporte) return;
+
+  Swal.fire({
+    title: '¿Marcar como resuelta?',
+    text: 'Esto indica que la mascota fue encontrada o el caso se resolvió.',
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonText: 'Sí, marcar',
+    cancelButtonText: 'Cancelar',
+    background: '#2A1E14',
+    color: '#F5EFE6',
+    confirmButtonColor: '#5ED4A0',
+    cancelButtonColor: '#3D2E1E',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.reporteService.updateReportStatus(this.reporte!.id, 'RESUELTA').subscribe({
+        next: (actualizado) => {
+          this.reporte = actualizado;
+          Swal.fire({
+            title: '¡Resuelta!',
+            text: 'El reporte fue marcado como resuelto.',
+            icon: 'success',
+            background: '#2A1E14',
+            color: '#F5EFE6',
+            confirmButtonColor: '#5ED4A0',
+            timer: 2000,
+            showConfirmButton: false,
+          });
+        },
+        error: (err) => {
+          Swal.fire({
+            title: 'Error',
+            text: err.status === 403
+              ? 'No tenés permisos para esta acción.'
+              : 'Error al actualizar el estado.',
+            icon: 'error',
+            background: '#2A1E14',
+            color: '#F5EFE6',
+            confirmButtonColor: '#5ED4A0',
+          });
+        }
+      });
+    }
+  });
+}
 }
