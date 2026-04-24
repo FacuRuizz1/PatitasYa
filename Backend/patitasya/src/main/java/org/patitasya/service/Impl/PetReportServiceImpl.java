@@ -127,6 +127,12 @@ public class PetReportServiceImpl implements PetReportService {
         validarPermiso(report, usuario);
 
         report.setEstado(status);
+
+        // Si se resuelve una perdida, pasa a ENCONTRADA
+        if (status == PostStatus.RESUELTA && report.getTipo() == PostType.PERDIDA) {
+            report.setTipo(PostType.ENCONTRADA);
+        }
+
         PetReport updated = petReportRepository.save(report);
         return mapToResponse(updated);
     }

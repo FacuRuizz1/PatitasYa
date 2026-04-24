@@ -20,10 +20,10 @@ public interface PetReportRepository extends JpaRepository<PetReport,Long> {
     Optional<PetReport> findById(Long id);
 
     long countByTipo(PostType tipo);
+    long countByEstado(PostStatus estado);
 
     long countByTipoAndCreatedAtAfter(PostType tipo, LocalDateTime desde);
     long countByTipoAndEstado(PostType tipo, PostStatus estado);
-
     long countByTipoAndEstadoAndCreatedAtAfter(PostType postType, PostStatus postStatus, LocalDateTime desde);
+    long countByEstadoAndCreatedAtAfter(PostStatus estado, LocalDateTime desde);
 }
-
