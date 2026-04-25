@@ -219,10 +219,6 @@ fotoSiguiente(): void {
     showCancelButton: true,
     confirmButtonText: 'Sí, marcar',
     cancelButtonText: 'Cancelar',
-    background: '#2A1E14',
-    color: '#F5EFE6',
-    confirmButtonColor: '#5ED4A0',
-    cancelButtonColor: '#3D2E1E',
   }).then((result) => {
     if (result.isConfirmed) {
       this.reporteService.updateReportStatus(this.reporte!.id, 'RESUELTA').subscribe({
@@ -232,9 +228,6 @@ fotoSiguiente(): void {
             title: '¡Resuelta!',
             text: 'El reporte fue marcado como resuelto.',
             icon: 'success',
-            background: '#2A1E14',
-            color: '#F5EFE6',
-            confirmButtonColor: '#5ED4A0',
             timer: 2000,
             showConfirmButton: false,
           });
@@ -246,9 +239,6 @@ fotoSiguiente(): void {
               ? 'No tenés permisos para esta acción.'
               : 'Error al actualizar el estado.',
             icon: 'error',
-            background: '#2A1E14',
-            color: '#F5EFE6',
-            confirmButtonColor: '#5ED4A0',
           });
         }
       });

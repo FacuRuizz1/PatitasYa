@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { PetReportResponse, PostStatusLabels, PostTypeLabels } from '../../../models/Reporte';
 import { PostType } from '../../../models/enums';
 import { ReporteService } from '../../../services/reporte.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-listar-reportes',
@@ -39,8 +40,13 @@ export class ListarReportesComponent {
       },
       error: (error) => {
         console.error('Error al cargar reportes:', error);
-        this.errorMessage = 'Error al cargar los reportes';
         this.loading = false;
+        Swal.fire({
+          title: 'Error al cargar los reportes',
+          text: 'No se pudieron cargar los reportes. Intenta de nuevo más tarde.',
+          icon: 'error',
+          confirmButtonColor: 'var(--primary-color)'
+        });
       }
     });
   }
@@ -59,6 +65,12 @@ export class ListarReportesComponent {
         error: (error) => {
           console.error('Error al filtrar:', error);
           this.loading = false;
+          Swal.fire({
+            title: 'Error al filtrar',
+            text: 'No se pudieron filtrar los reportes. Intenta de nuevo.',
+            icon: 'error',
+            confirmButtonColor: 'var(--primary-color)'
+          });
         }
       });
     }
