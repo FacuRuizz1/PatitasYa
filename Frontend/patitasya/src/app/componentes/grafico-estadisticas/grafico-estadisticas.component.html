@@ -1,4 +1,6 @@
 <div class="grafico-card">
+  <button class="btn-volver" (click)="volver()">← Volver al inicio</button>
+
   <div class="grafico-header">
     <h3>📊 Estadísticas de reportes</h3>
     <p>Distribución por tipo de mascota</p>
@@ -47,7 +49,7 @@
       Total: <strong>{{ estadisticas.total }}</strong> reportes
     </div>
 
-     <div class="resolucion-card">
+    <div class="resolucion-card">
       <div class="resolucion-info">
         <span class="resolucion-titulo">🎯 Tasa de resolución</span>
         <span class="resolucion-sub">Mascotas perdidas que fueron resueltas</span>

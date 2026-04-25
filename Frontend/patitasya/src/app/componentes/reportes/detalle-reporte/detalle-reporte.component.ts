@@ -173,7 +173,7 @@ fotoSiguiente(): void {
     this.mostrarModalEditar = false;
   }
 
-  eliminarReporte(): void {
+ eliminarReporte(): void {
     Swal.fire({
       title: '¿Eliminar reporte?',
       text: 'Esta acción no se puede deshacer.',
@@ -181,10 +181,6 @@ fotoSiguiente(): void {
       showCancelButton: true,
       confirmButtonText: 'Sí, eliminar',
       cancelButtonText: 'Cancelar',
-      background: '#2A1E14',
-      color: '#F5EFE6',
-      confirmButtonColor: '#F28B6E',
-      cancelButtonColor: '#3D2E1E',
     }).then((result) => {
       if (result.isConfirmed) {
         this.reporteService.deleteReport(this.reporte!.id).subscribe({
@@ -193,9 +189,6 @@ fotoSiguiente(): void {
               title: '¡Eliminado!',
               text: 'El reporte fue eliminado correctamente.',
               icon: 'success',
-              background: '#2A1E14',
-              color: '#F5EFE6',
-              confirmButtonColor: '#5ED4A0',
               timer: 2000,
               showConfirmButton: false,
             }).then(() => {
@@ -209,9 +202,6 @@ fotoSiguiente(): void {
                 ? 'No tenés permisos para eliminar este reporte.'
                 : 'Ocurrió un error al eliminar.',
               icon: 'error',
-              background: '#2A1E14',
-              color: '#F5EFE6',
-              confirmButtonColor: '#5ED4A0',
             });
           }
         });

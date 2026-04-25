@@ -3,11 +3,12 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { Estadisticas } from '../../models/Estadisticas';
 import { ReporteService } from '../../services/reporte.service';
 import { GoogleChartsModule, ChartType } from 'angular-google-charts';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-grafico-estadisticas',
   standalone: true,
-  imports: [CommonModule, GoogleChartsModule],
+  imports: [CommonModule, GoogleChartsModule, RouterLink],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './grafico-estadisticas.component.html',
   styleUrl: './grafico-estadisticas.component.css'
@@ -42,7 +43,7 @@ export class GraficoEstadisticasComponent implements OnInit {
     fontName: 'DM Sans',
   };
 
-   constructor(private reporteService: ReporteService) {}
+   constructor(private reporteService: ReporteService, private router: Router) {}
 
    ngOnInit(): void {
     this.cargarEstadisticas();
@@ -70,5 +71,7 @@ export class GraficoEstadisticasComponent implements OnInit {
     this.cargarEstadisticas();
   }
   
-
+  volver(): void {
+  this.router.navigate(['/reportes']);
+ }
 }

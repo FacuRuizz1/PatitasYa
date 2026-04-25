@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { PetReportRequest, PetReportResponse } from '../../../models/Reporte';
 import { ReporteService } from '../../../services/reporte.service';
 import { PostType as PostTypeEnum } from '../../../models/enums';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-editar-reporte-modal',
@@ -48,10 +49,21 @@ export class EditarReporteModalComponent implements OnInit {
     this.errorMessage = '';
 
     this.reporteService.updateReport(this.reporte.id, this.form).subscribe({
-      next: (actualizado) => {
-        this.guardando = false;
-        this.guardado.emit(actualizado);
-      },
+     next: (actualizado) => {
+     this.guardando = false;
+     Swal.fire({
+    title: '¡Reporte actualizado!',
+    text: 'Los cambios fueron guardados correctamente.',
+    icon: 'success',
+    confirmButtonColor: 'var(--primary-color)',
+    background: 'var(--white)',
+    color: 'var(--text-dark)',
+    timer: 2000,
+    showConfirmButton: false,
+  }).then(() => {
+    this.guardado.emit(actualizado);
+  });
+},
       error: (err) => {
         this.guardando = false;
         this.errorMessage = err.status === 403
